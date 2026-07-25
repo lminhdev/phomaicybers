@@ -1,187 +1,540 @@
-/* Khai báo biến màu sắc */
-:root {
-    --bg-color: #050505;
-    --text-main: #00ff41;
-    --text-secondary: #008f11;
-    --alert-color: #ff003c;
-    --border-color: #003b00;
+/* ==========================
+   RESET
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    font-family: 'Courier New', Courier, monospace;
-    line-height: 1.6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+body{
+    font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
+    background:#07131d;
+    color:#ffffff;
+    overflow-x:hidden;
 }
 
-#app {
-    width: 100%;
-    max-width: 850px;
-    background: #0a0a0a;
-    border: 1px solid var(--text-secondary);
-    border-radius: 5px;
-    padding: 25px;
-    box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-    position: relative;
-    overflow: hidden;
+/* ==========================
+   BACKGROUND
+========================== */
+
+.bg-grid{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+
+    background:
+        linear-gradient(rgba(0,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,255,.05) 1px, transparent 1px);
+
+    background-size:40px 40px;
+    animation:gridMove 10s linear infinite;
 }
 
-/* Hiệu ứng sọc màn hình CRT (Scanline) */
-#app::before {
-    content: " ";
-    display: block;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    z-index: 2;
-    background-size: 100% 2px, 3px 100%;
-    pointer-events: none;
+.bg-grid::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(circle at center,
+        rgba(0,255,255,.18),
+        transparent 70%);
+
+    animation:pulse 4s infinite;
 }
 
-h1, h2, h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: 1px dashed var(--text-secondary);
-    padding-bottom: 10px;
+@keyframes gridMove{
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(40px);
+    }
+
 }
 
-.hidden {
-    display: none !important;
+@keyframes pulse{
+
+    0%{
+        opacity:.5;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:.5;
+    }
+
 }
 
-/* Để nội dung đè lên hiệu ứng scanline */
-.screen {
-    position: relative;
-    z-index: 3;
+/* ==========================
+   SCREEN
+========================== */
+
+.screen{
+    display:none;
+    min-height:100vh;
+    padding:40px 20px;
 }
 
-/* Intro Screen */
-.intro-text {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 1.1rem;
+.screen.active{
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-/* Nút bấm (Buttons) */
-.btn {
-    display: block;
-    width: 100%;
-    background-color: transparent;
-    color: var(--text-main);
-    border: 1px solid var(--text-main);
-    padding: 15px;
-    font-size: 16px;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 10px;
-    text-align: left;
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+    width:100%;
+    max-width:850px;
+    text-align:center;
 }
 
-.btn:hover:not(:disabled) {
-    background-color: var(--text-main);
-    color: var(--bg-color);
-    box-shadow: 0 0 10px var(--text-main);
+.hero h1{
+
+    font-size:52px;
+    color:#00eaff;
+
+    text-shadow:
+    0 0 10px #00eaff,
+    0 0 30px #00eaff;
+
+    margin:30px 0;
+
+    line-height:1.2;
 }
 
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.hero p{
+
+    color:#b9d6de;
+    line-height:1.8;
+    font-size:18px;
+
 }
 
-.btn-center {
-    text-align: center;
-    max-width: 350px;
-    margin: 0 auto;
+/* ==========================
+   BADGE
+========================== */
+
+.badge{
+
+    display:inline-block;
+
+    padding:10px 20px;
+
+    border:1px solid #00eaff;
+
+    border-radius:50px;
+
+    color:#00eaff;
+
+    font-weight:bold;
+
+    letter-spacing:2px;
+
+    box-shadow:
+    0 0 12px rgba(0,255,255,.3);
+
 }
 
-/* Game Screen */
-.level-indicator {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 15px;
-    font-weight: bold;
+.badge.success{
+
+    color:#00ff88;
+    border-color:#00ff88;
+
+    box-shadow:
+    0 0 18px rgba(0,255,136,.45);
+
 }
 
-.scenario {
-    margin-bottom: 15px;
-    font-size: 16px;
+/* ==========================
+   BUTTON
+========================== */
+
+button{
+
+    margin-top:35px;
+
+    padding:15px 32px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#00d9ff;
+
+    color:#00131f;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:
+    0 0 18px rgba(0,217,255,.45);
+
 }
 
-.log-box {
-    background-color: #000;
-    border-left: 3px solid var(--text-secondary);
-    padding: 15px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    overflow-x: auto;
-    white-space: pre-wrap;
-    word-break: break-all;
-    color: #ccc;
+button:hover{
+
+    transform:translateY(-2px);
+
+    background:#37f4ff;
+
+    box-shadow:
+    0 0 25px rgba(0,255,255,.8);
+
 }
 
-.options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+/* ==========================
+   CONTAINER
+========================== */
+
+.container{
+
+    width:100%;
+    max-width:900px;
+
 }
 
-#feedback-msg {
-    margin-top: 15px;
-    font-weight: bold;
-    text-align: center;
-    font-size: 18px;
-    min-height: 50px;
+/* ==========================
+   TOPBAR
+========================== */
+
+.topbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin-bottom:20px;
+
 }
 
-.success { color: var(--text-main); text-shadow: 0 0 5px var(--text-main); }
-.error { color: var(--alert-color); text-shadow: 0 0 5px var(--alert-color); }
+.small{
 
-/* Result Screen */
-.stats-box {
-    background: rgba(0, 255, 65, 0.1);
-    padding: 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 1.1rem;
+    font-size:13px;
+
+    color:#93aab4;
+
+    margin-bottom:5px;
+
 }
 
-.tips-list {
-    list-style-type: square;
-    margin-left: 20px;
-    margin-bottom: 25px;
+#progress,
+#score{
+
+    font-size:26px;
+
+    color:#00eaff;
+
+    font-weight:bold;
+
 }
 
-.tips-list li {
-    margin-bottom: 12px;
+/* ==========================
+   PROGRESS BAR
+========================== */
+
+.progress-bar{
+
+    width:100%;
+
+    height:10px;
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+    background:#10222f;
+
+    margin-bottom:30px;
+
 }
 
-/* Hiệu ứng con trỏ nhấp nháy */
-.cursor {
-    animation: blink 1s step-end infinite;
-}
-@keyframes blink {
-    50% { opacity: 0; }
+#progressFill{
+
+    width:20%;
+
+    height:100%;
+
+    background:#00eaff;
+
+    transition:.5s;
+
+    box-shadow:
+    0 0 15px cyan;
+
 }
 
-/* Tương thích điện thoại */
-@media (max-width: 600px) {
-    #app { padding: 15px; border: none; box-shadow: none; }
-    h1 { font-size: 20px; }
-    .btn { font-size: 14px; padding: 12px; }
-    .log-box { font-size: 12px; }
+/* ==========================
+   CARD
+========================== */
+
+.card{
+
+    margin-bottom:20px;
+
+    background:rgba(11,25,35,.88);
+
+    border:1px solid rgba(0,255,255,.25);
+
+    border-radius:14px;
+
+    padding:25px;
+
+    backdrop-filter:blur(5px);
+
+    box-shadow:
+    0 0 15px rgba(0,255,255,.1);
+
+}
+
+.card h2{
+
+    color:#00eaff;
+
+    margin-bottom:18px;
+
+}
+
+.card h3{
+
+    color:#6ce8ff;
+
+    margin-bottom:16px;
+
+}
+
+.card p{
+
+    line-height:1.8;
+
+    color:#dce8ed;
+
+}
+
+pre{
+
+    white-space:pre-wrap;
+
+    line-height:1.8;
+
+    color:#8ef0ff;
+
+    font-size:15px;
+
+}
+
+/* ==========================
+   ANSWERS
+========================== */
+
+.answer{
+
+    display:block;
+
+    width:100%;
+
+    padding:15px;
+
+    margin-top:12px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(0,255,255,.2);
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    background:#102330;
+
+}
+
+.answer:hover{
+
+    border-color:#00eaff;
+
+    background:#153649;
+
+}
+
+.answer input{
+
+    margin-right:10px;
+
+}
+
+/* ==========================
+   MESSAGE
+========================== */
+
+#message{
+
+    text-align:center;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    min-height:40px;
+
+    margin:20px 0;
+
+}
+
+.success{
+
+    color:#00ff88;
+
+}
+
+.fail{
+
+    color:#ff5f5f;
+
+}
+
+/* ==========================
+   RESULT
+========================== */
+
+.result-box{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    border-radius:14px;
+
+    border:1px solid rgba(0,255,255,.25);
+
+    background:rgba(10,25,36,.9);
+
+    text-align:left;
+
+}
+
+.result-box h2{
+
+    color:#00eaff;
+
+    margin-bottom:15px;
+
+}
+
+.result-box ul{
+
+    padding-left:20px;
+
+    line-height:2;
+
+}
+
+#rank{
+
+    margin-top:10px;
+
+    font-size:22px;
+
+    color:#00ff88;
+
+    font-weight:bold;
+
+}
+
+/* ==========================
+   SCROLLBAR
+========================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#00d9ff;
+
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#08131c;
+
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:768px){
+
+.hero h1{
+
+    font-size:34px;
+
+}
+
+.hero p{
+
+    font-size:16px;
+
+}
+
+.topbar{
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.card{
+
+    padding:18px;
+
+}
+
+button{
+
+    width:100%;
+
+}
+
+#progress,
+#score{
+
+    font-size:22px;
+
+}
+
+#message{
+
+    font-size:18px;
+
+}
+
 }
