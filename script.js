@@ -1,13 +1,3 @@
-/*======================================================
-Cyber Trace Simulator v1.4
-script.js
-Part 4.1
-======================================================*/
-
-/* =========================
-   GLOBAL VARIABLES
-========================= */
-
 const screens = {
     home: document.getElementById("homeScreen"),
     dashboard: document.getElementById("dashboardScreen"),
@@ -25,10 +15,6 @@ const moduleContent = document.getElementById("moduleContent");
 const scoreElement = document.getElementById("score");
 const progressBar = document.getElementById("progressBar");
 
-/* =========================
-   MODULE ORDER
-========================= */
-
 const moduleOrder = [
     "email",
     "url",
@@ -40,10 +26,6 @@ const moduleOrder = [
     "osint",
     "timeline"
 ];
-
-/* =========================
-   GAME STATE
-========================= */
 
 let game = {
 
@@ -61,10 +43,6 @@ let game = {
 
 };
 
-/* =========================
-   SHOW SCREEN
-========================= */
-
 function showScreen(name){
 
     Object.values(screens).forEach(screen=>{
@@ -77,19 +55,11 @@ function showScreen(name){
 
 }
 
-/* =========================
-   UPDATE SCORE
-========================= */
-
 function updateScore(){
 
     scoreElement.textContent = game.score;
 
 }
-
-/* =========================
-   UPDATE PROGRESS
-========================= */
 
 function updateProgress(){
 
@@ -99,10 +69,6 @@ function updateProgress(){
     progressBar.style.width = percent + "%";
 
 }
-
-/* =========================
-   RESET GAME
-========================= */
 
 function resetGame(){
 
@@ -124,10 +90,6 @@ function resetGame(){
 
 }
 
-/* =========================
-   START GAME
-========================= */
-
 function startGame(){
 
     resetGame();
@@ -137,10 +99,6 @@ function startGame(){
     showScreen("dashboard");
 
 }
-
-/* =========================
-   DASHBOARD
-========================= */
 
 function unlockModules(){
 
@@ -165,13 +123,6 @@ function unlockModules(){
 
 }
 
-/* =========================
-   MODULE CLICK
-========================= */
-
-/* =========================
-   MODULE CLICK
-========================= */
 document
 .querySelectorAll(".module")
 .forEach((button,index)=>{
@@ -181,7 +132,6 @@ document
         }
         const moduleName = button.dataset.module;
         
-        // Thêm khối if-else để phân loại nút Report
         if(moduleName === "report"){
             showReport();
         } else {
@@ -189,10 +139,6 @@ document
         }
     });
 });
-
-/* =========================
-   BUTTON EVENTS
-========================= */
 
 startBtn.addEventListener("click",startGame);
 
@@ -207,29 +153,6 @@ backBtn.addEventListener("click",()=>{
     showScreen("dashboard");
 
 });
-
-/* =========================
-   PLACEHOLDER
-========================= */
-
-/*
-Các hàm dưới đây sẽ được
-cài đặt ở Phần 4.2
-
-- openModule()
-- renderQuestion()
-- renderAnswers()
-- nextQuestion()
-
-*/
-/*======================================================
-Part 4.2
-MODULE ENGINE
-======================================================*/
-
-/* =========================
-   OPEN MODULE
-========================= */
 
 function openModule(moduleName){
 
@@ -249,19 +172,11 @@ function openModule(moduleName){
 
 }
 
-/* =========================
-   GET QUESTIONS
-========================= */
-
 function getCurrentQuestions(){
 
     return CASE_DATA.modules[game.currentModule] || [];
 
 }
-
-/* =========================
-   RENDER QUESTION
-========================= */
 
 function renderQuestion(){
 
@@ -307,10 +222,6 @@ function renderQuestion(){
 
 }
 
-/* =========================
-   RENDER ANSWERS
-========================= */
-
 function renderAnswers(question){
 
     const container =
@@ -341,10 +252,6 @@ function renderAnswers(question){
 
 }
 
-/* =========================
-   LOCK ANSWERS
-========================= */
-
 function lockAnswers(){
 
     document
@@ -357,10 +264,6 @@ function lockAnswers(){
 
 }
 
-/* =========================
-   NEXT QUESTION
-========================= */
-
 function nextQuestion(){
 
     game.currentQuestion++;
@@ -368,10 +271,6 @@ function nextQuestion(){
     renderQuestion();
 
 }
-
-/* =========================
-   STATUS
-========================= */
 
 function setStatus(message,success){
 
@@ -386,14 +285,6 @@ function setStatus(message,success){
         : "status fail";
 
 }
-/*======================================================
-Part 4.3
-ANSWER ENGINE
-======================================================*/
-
-/* =========================
-   ANSWER QUESTION
-========================= */
 
 function answerQuestion(index, question, button){
 
@@ -467,25 +358,16 @@ function answerQuestion(index, question, button){
 
 }
 
-/* =========================
-   FINISH MODULE
-========================= */
-
 function finishModule(){
     game.completed++;
     updateProgress();
     completeCurrentModule();
     unlockNextModule();
     
-    // Chỉ quay lại dashboard nếu vụ án chưa kết thúc
     if(game.completed < moduleOrder.length){
         showScreen("dashboard");
     }
 }
-
-/* =========================
-   COMPLETE MODULE
-========================= */
 
 function completeCurrentModule(){
 
@@ -511,22 +393,13 @@ function completeCurrentModule(){
 
 }
 
-/* =========================
-   UNLOCK NEXT
-========================= */
-
 function unlockNextModule(){
-    // Cho phép mở khóa đến module thứ 10 (Report)
     if(game.unlocked <= moduleOrder.length){
         game.unlocked++;
     }
     unlockModules();
     checkCaseFinished();
 }
-
-/* =========================
-   CHECK CASE
-========================= */
 
 function checkCaseFinished(){
 
@@ -543,10 +416,6 @@ function checkCaseFinished(){
     }
 
 }
-
-/* =========================
-   ACTIVE MODULE
-========================= */
 
 function highlightModule(){
 
@@ -571,14 +440,6 @@ function highlightModule(){
     });
 
 }
-/*======================================================
-Part 4.4
-UTILITY + TOAST + EVIDENCE
-======================================================*/
-
-/* =========================
-   TOAST
-========================= */
 
 function showToast(message,type="info"){
 
@@ -619,10 +480,6 @@ function showToast(message,type="info"){
 
 }
 
-/* =========================
-   LOADING
-========================= */
-
 function showLoading(){
 
     moduleContent.innerHTML=`
@@ -656,10 +513,6 @@ function showLoading(){
     `;
 
 }
-
-/* =========================
-   EVIDENCE
-========================= */
 
 function renderEvidenceBoard(){
 
@@ -695,10 +548,6 @@ function renderEvidenceBoard(){
 
 }
 
-/* =========================
-   TERMINAL MESSAGE
-========================= */
-
 function terminalMessage(text){
 
     return `
@@ -727,10 +576,6 @@ ${text}
 
 }
 
-/* =========================
-   MODULE TITLE
-========================= */
-
 const moduleNames={
 
 email:"Email Forensics",
@@ -753,10 +598,6 @@ timeline:"Timeline"
 
 };
 
-/* =========================
-   UPDATE TITLE
-========================= */
-
 function updateModuleTitle(){
 
     moduleTitle.textContent=
@@ -766,10 +607,6 @@ function updateModuleTitle(){
         game.currentModule;
 
 }
-
-/* =========================
-   OVERRIDE
-========================= */
 
 const oldOpenModule=openModule;
 
@@ -797,19 +634,11 @@ openModule=function(moduleName){
 
 };
 
-/* =========================
-   CASE INFORMATION
-========================= */
-
 function getCaseInfo(){
 
     return CASE_DATA.caseInfo;
 
 }
-
-/* =========================
-   SCORE PERCENT
-========================= */
 
 function getAccuracy(){
 
@@ -836,10 +665,6 @@ function getAccuracy(){
     );
 
 }
-
-/* =========================
-   RANK
-========================= */
 
 function getRank(){
 
@@ -870,14 +695,6 @@ function getRank(){
     return "D";
 
 }
-/*======================================================
-Part 4.5
-REPORT ENGINE
-======================================================*/
-
-/* =========================
-   SHOW REPORT
-========================= */
 
 function showReport(){
 
@@ -913,10 +730,6 @@ function showReport(){
     createReportExtra();
 
 }
-
-/* =========================
-   REPORT EXTRA
-========================= */
 
 function createReportExtra(){
 
@@ -985,10 +798,6 @@ function createReportExtra(){
 
 }
 
-/* =========================
-   SAVE RESULT
-========================= */
-
 function saveResult(){
 
     const result = {
@@ -1015,10 +824,6 @@ function saveResult(){
 
 }
 
-/* =========================
-   LOAD RESULT
-========================= */
-
 function loadResult(){
 
     const data =
@@ -1039,10 +844,6 @@ function loadResult(){
 
 }
 
-/* =========================
-   REPORT OVERRIDE
-========================= */
-
 const oldShowReport = showReport;
 
 showReport = function(){
@@ -1061,10 +862,6 @@ showReport = function(){
 
 }
 
-/* =========================
-   RESTART
-========================= */
-
 restartBtn.addEventListener(
 
     "click",
@@ -1082,10 +879,6 @@ restartBtn.addEventListener(
     }
 
 );
-
-/* =========================
-   STARTUP
-========================= */
 
 window.addEventListener(
 
