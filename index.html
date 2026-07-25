@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hành Trình Truy Vết Tội Phạm Mạng</title>
+    <!-- Nhúng file CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="app">
+        <!-- SCREEN 1: BẮT ĐẦU -->
+        <div id="intro-screen" class="screen">
+            <h1>Hệ Thống Truy Vết<span class="cursor">_</span></h1>
+            <div class="intro-text">
+                <p>CẢNH BÁO: Máy chủ trung tâm của tập đoàn X vừa bị xâm nhập. Dữ liệu khách hàng đang bị rò rỉ.</p>
+                <br>
+                <p>Nhiệm vụ của bạn: Trở thành Chuyên gia An ninh mạng, phân tích các dấu vết để lại (logs, IP, hành vi) để tìm ra danh tính kẻ tấn công trước khi quá muộn.</p>
+            </div>
+            <button class="btn btn-center" onclick="startGame()">[KHỞI ĐỘNG HỆ THỐNG]</button>
+        </div>
+
+        <!-- SCREEN 2: GAMEPLAY -->
+        <div id="game-screen" class="screen hidden">
+            <div class="level-indicator" id="level-display">Giai đoạn: 1/x</div>
+            
+            <div class="scenario" id="scenario-text">
+                <!-- Nội dung tình huống được inject từ JS -->
+            </div>
+            
+            <div class="log-box" id="clue-box">
+                <!-- Dữ liệu/Log manh mối -->
+            </div>
+
+            <div class="options" id="options-container">
+                <!-- Các nút đáp án sẽ render ở đây -->
+            </div>
+
+            <div id="feedback-msg"></div>
+        </div>
+
+        <!-- SCREEN 3: KẾT QUẢ -->
+        <div id="result-screen" class="screen hidden">
+            <h1>Hồ Sơ Tội Phạm Mạng</h1>
+            
+            <div class="stats-box">
+                <p><strong>Trạng thái:</strong> Bắt giữ thành công!</p>
+                <p><strong>Điểm điều tra:</strong> <span id="final-score"></span>/100</p>
+                <p><strong>Đánh giá năng lực:</strong> <span id="final-eval"></span></p>
+            </div>
+
+            <h3>Khuyến Nghị Phòng Chống</h3>
+            <ul class="tips-list">
+                <li><strong>Xác thực email:</strong> Kiểm tra kỹ Return-Path, áp dụng SPF, DKIM, DMARC.</li>
+                <li><strong>Kiểm soát Endpoint (EDR):</strong> Chặn Microsoft Office tự động chạy Macro, giám sát hành vi spawn shell lạ (cmd, powershell).</li>
+                <li><strong>Lọc đầu vào (Input Validation):</strong> Dùng Parameterized Queries để chống SQL Injection.</li>
+                <li><strong>Kiểm soát đặc quyền (PAM):</strong> Thường xuyên kiểm tra các file có quyền SUID trên hệ thống Linux.</li>
+                <li><strong>Giám sát mạng:</strong> Chặn/cảnh báo các kết nối Outbound bất thường đến IP lạ.</li>
+            </ul>
+
+            <button class="btn btn-center" onclick="resetGame()">[ĐÓNG HỒ SƠ & BẮT ĐẦU LẠI]</button>
+        </div>
+    </div>
+
+    <!-- Nhúng file JS (đặt ở cuối body hoặc dùng defer để đảm bảo HTML load xong mới chạy JS) -->
+    <script src="script.js"></script>
+</body>
+</html>
