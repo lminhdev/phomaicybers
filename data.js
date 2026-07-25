@@ -1,32 +1,20 @@
-/*========================================================
-
-Cyber Trace Simulator
-Version 1.4
-
-data.js
-
-Part 3.1
-
-========================================================*/
-
-
 const CASE_DATA={
 
 caseInfo:{
 
 id:"CASE-001",
 
-title:"Lừa đảo chuyển khoản",
+title:"Lừa đảo chuyển khoản qua Dép Lào",
 
-victim:"Nguyễn Văn A",
+victim:"Nguyễn Văn A (aka Khoai Lang Beng)",
 
-loss:"50.000.000 VNĐ",
+loss:"100.000.000 VNĐ",
 
 risk:"HIGH",
 
-alias:"ShadowFox",
+alias:"phomaiconmelcuoi",
 
-ip:"185.201.12.88",
+ip:"167.360.69.36",
 
 country:"Campuchia",
 
@@ -282,10 +270,7 @@ explain:
 
 ],
 
-whois:[/*========================================================
-PART 3.2
-WHOIS + DNS + IP
-========================================================*/
+whois:[
 
 {
 
@@ -611,10 +596,7 @@ explain:
 
 ],
 
-log:[/*========================================================
-PART 3.3
-LOG + METADATA + OSINT + TIMELINE
-========================================================*/
+log:[
 
 {
 
