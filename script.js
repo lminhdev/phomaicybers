@@ -1,329 +1,264 @@
-const home = document.getElementById("home");
-const game = document.getElementById("game");
-const result = document.getElementById("result");
+//===========================
+// HÀNH TRÌNH TRUY VẾT
+//===========================
 
-const startBtn = document.getElementById("startBtn");
-const nextBtn = document.getElementById("nextBtn");
+const home=document.getElementById("home");
+const game=document.getElementById("game");
+const result=document.getElementById("result");
 
-const progress = document.getElementById("progress");
-const progressFill = document.getElementById("progressFill");
+const startBtn=document.getElementById("startBtn");
 
-const scoreText = document.getElementById("score");
+const question=document.getElementById("question");
+const answers=document.getElementById("answers");
 
-const caseTitle = document.getElementById("caseTitle");
-const caseStory = document.getElementById("caseStory");
-const evidence = document.getElementById("evidence");
-const question = document.getElementById("question");
+const statusText=document.getElementById("status");
+const nextBtn=document.getElementById("nextBtn");
 
-const answers = document.getElementById("answers");
-const message = document.getElementById("message");
+const currentTask=document.getElementById("currentTask");
+const totalTask=document.getElementById("totalTask");
 
-const finalScore = document.getElementById("finalScore");
-const rank = document.getElementById("rank");
+const scoreText=document.getElementById("score");
 
-let current = 0;
-let score = 0;
-let selected = null;
-let answered = false;
+const progress=document.getElementById("progressBar");
 
-const cases = [
+const alias=document.getElementById("alias");
+const ip=document.getElementById("ip");
+const country=document.getElementById("country");
 
-{
+const finalScore=document.getElementById("finalScore");
+const rank=document.getElementById("rank");
 
-title:"Tình huống 1 - Email giả mạo",
+let index=0;
+let score=0;
 
-story:
-`Một nhân viên nhận được email tự xưng là ngân hàng yêu cầu xác minh tài khoản.
+totalTask.innerText=tasks.length;
 
-Email có logo rất giống thật và yêu cầu đăng nhập ngay để tránh khóa tài khoản.`,
+//===========================
+// DỮ LIỆU MÔ PHỎNG
+//===========================
 
-evidence:
-`Địa chỉ gửi:
+const aliases=[
 
-support@vietcom-bank-security.com
+"ShadowFox",
 
-IP gửi:
+"DarkWolf",
 
-185.117.xxx.xxx
+"GhostByte",
 
-Liên kết:
+"NightSpider",
 
-https://vietcom-bank-security.com/login`,
+"ZeroTrace",
 
-question:
-"Điểm đáng nghi nhất là gì?",
+"BlackRoot",
 
-answers:[
+"SilentMask",
 
-"Có logo ngân hàng",
-
-"Tên miền không phải tên miền chính thức",
-
-"Email được gửi buổi tối",
-
-"Có file PDF đính kèm"
-
-],
-
-correct:1
-
-},
-
-{
-
-title:"Tình huống 2 - Nhật ký đăng nhập",
-
-story:
-`Sau khi nhấn vào liên kết, tài khoản của nạn nhân xuất hiện hoạt động bất thường.`,
-
-evidence:
-`02:15
-
-Đăng nhập thành công
-
-Quốc gia:
-
-Nga
-
-Thiết bị:
-
-Windows 11
-
-Trình duyệt:
-
-Chrome`,
-
-question:
-"Dấu hiệu nào cho thấy tài khoản có khả năng bị xâm nhập?",
-
-answers:[
-
-"Đăng nhập bằng Chrome",
-
-"Sử dụng Windows",
-
-"Đăng nhập từ quốc gia bất thường",
-
-"Đăng nhập lúc ban đêm"
-
-],
-
-correct:2
-
-},
-
-{
-
-title:"Tình huống 3 - Kết thúc truy vết",
-
-story:
-`Máy chủ ghi nhận hơn 1500 yêu cầu mỗi phút từ hàng trăm địa chỉ IP.
-
-Qua phân tích, AI phát hiện các dấu vết đều liên quan tới cùng một nhóm tấn công.`,
-
-evidence:
-`• Email giả
-
-• Website giả mạo
-
-• Đăng nhập trái phép
-
-• 300 địa chỉ IP
-
-• Botnet`,
-
-question:
-"Kết luận hợp lý nhất là gì?",
-
-answers:[
-
-"Máy chủ bị lỗi",
-
-"Người dùng quên mật khẩu",
-
-"Tội phạm sử dụng Phishing kết hợp Botnet",
-
-"Lỗi trình duyệt"
-
-],
-
-correct:2
-
-}
+"CyberGhost"
 
 ];
 
-startBtn.addEventListener("click", () => {
+const ips=[
 
-    home.classList.remove("active");
-    game.classList.add("active");
+"185.201.12.88",
 
-    loadCase();
+"103.74.21.54",
 
-});
+"91.201.44.12",
 
-function loadCase() {
+"178.12.44.199",
 
-    answered = false;
-    selected = null;
+"194.11.56.90",
 
-    message.innerHTML = "";
+"103.221.88.15"
 
-    nextBtn.innerText = "XÁC NHẬN";
+];
 
-    const c = cases[current];
+const countries=[
 
-    progress.innerText = `${current + 1} / ${cases.length}`;
+"Campuchia",
 
-    scoreText.innerText = score;
+"Việt Nam (VPN)",
 
-    progressFill.style.width =
-        ((current + 1) / cases.length) * 100 + "%";
+"Singapore",
 
-    caseTitle.innerText = c.title;
+"Hong Kong",
 
-    caseStory.innerText = c.story;
+"Malaysia",
 
-    evidence.innerText = c.evidence;
+"Thái Lan"
 
-    question.innerText = c.question;
+];
 
-    answers.innerHTML = "";
+//===========================
 
-    c.answers.forEach((text, index) => {
+startBtn.onclick=()=>{
 
-        const label = document.createElement("label");
+home.classList.add("hidden");
 
-        label.className = "answer";
+game.classList.remove("hidden");
 
-        label.innerHTML = `
+loadTask();
 
-            <input
-                type="radio"
-                name="answer"
-                value="${index}"
-            >
+};
 
-            ${text}
+//===========================
 
-        `;
+function loadTask(){
 
-        label.querySelector("input")
-            .addEventListener("change", () => {
+statusText.innerHTML="";
 
-                selected = index;
+statusText.className="";
 
-        });
+nextBtn.classList.add("hidden");
 
-        answers.appendChild(label);
+currentTask.innerText=index+1;
 
-    });
+progress.style.width=((index)/tasks.length)*100+"%";
 
-}
+const task=tasks[index];
 
-nextBtn.addEventListener("click", () => {
+question.innerHTML=task.question.replace(/\n/g,"<br>");
 
-    if (!answered) {
+answers.innerHTML="";
 
-        checkAnswer();
+task.options.forEach((option,i)=>{
 
-    } else {
+const btn=document.createElement("button");
 
-        current++;
+btn.className="answer";
 
-        if (current >= cases.length) {
+btn.innerHTML=option;
 
-            finishGame();
+btn.onclick=()=>check(btn,i);
 
-        } else {
-
-            loadCase();
-
-        }
-
-    }
+answers.appendChild(btn);
 
 });
 
-function checkAnswer() {
+}
 
-    if (selected === null) {
+//===========================
 
-        alert("Hãy chọn một đáp án.");
+function check(button,choose){
 
-        return;
+const task=tasks[index];
 
-    }
+const all=document.querySelectorAll(".answer");
 
-    answered = true;
+all.forEach(btn=>btn.disabled=true);
 
-    if (selected === cases[current].correct) {
+statusText.className="trace";
 
-        score += 10;
+statusText.innerHTML="🔍 Đang truy vết...";
 
-        scoreText.innerText = score;
+setTimeout(()=>{
 
-        message.innerHTML =
-            "✔ Truy vết thành công";
+if(choose===task.answer){
 
-        message.className = "success";
+button.classList.add("correct");
 
-    } else {
+score++;
 
-        message.innerHTML =
-            "✖ Truy vết thất bại";
+scoreText.innerText=score;
 
-        message.className = "fail";
+statusText.className="success";
 
-    }
+statusText.innerHTML="✅ Truy vết thành công";
 
-    nextBtn.innerText =
+}else{
 
-        current === cases.length - 1
+button.classList.add("wrong");
 
-        ? "XEM KẾT QUẢ"
+all[task.answer].classList.add("correct");
 
-        : "TÌNH HUỐNG TIẾP";
+statusText.className="fail";
+
+statusText.innerHTML="❌ Truy vết thất bại";
 
 }
 
-function finishGame() {
+nextBtn.classList.remove("hidden");
 
-    game.classList.remove("active");
-    result.classList.add("active");
-
-    finalScore.innerText = `${score} / ${cases.length * 10}`;
-
-    let title = "";
-    let color = "";
-
-    if (score === cases.length * 10) {
-
-        title = "🏆 Chuyên gia truy vết";
-        color = "#00ff88";
-
-    } else if (score >= 20) {
-
-        title = "🥈 Điều tra viên";
-        color = "#00eaff";
-
-    } else if (score >= 10) {
-
-        title = "📘 Người học";
-        color = "#ffd54f";
-
-    } else {
-
-        title = "📖 Cần luyện tập thêm";
-        color = "#ff6b6b";
-
-    }
-
-    rank.innerText = title;
-    rank.style.color = color;
+},800);
 
 }
 
-progressFill.style.width = "0%";
-scoreText.innerText = "0";
-message.innerHTML = "";
+//===========================
+
+nextBtn.onclick=()=>{
+
+index++;
+
+if(index>=tasks.length){
+
+showResult();
+
+}else{
+
+loadTask();
+
+}
+
+};
+
+//===========================
+
+function randomItem(array){
+
+return array[Math.floor(Math.random()*array.length)];
+
+}
+
+//===========================
+
+function showResult(){
+
+game.classList.add("hidden");
+
+result.classList.remove("hidden");
+
+progress.style.width="100%";
+
+alias.innerText=randomItem(aliases);
+
+ip.innerText=randomItem(ips);
+
+country.innerText=randomItem(countries);
+
+finalScore.innerText=score+" / "+tasks.length;
+
+let text="";
+
+if(score==tasks.length){
+
+text="★★★★★ Chuyên gia truy vết";
+
+}
+
+else if(score>=8){
+
+text="★★★★☆ Điều tra viên cao cấp";
+
+}
+
+else if(score>=6){
+
+text="★★★☆☆ Có kiến thức khá";
+
+}
+
+else if(score>=4){
+
+text="★★☆☆☆ Cần luyện thêm";
+
+}
+
+else{
+
+text="★☆☆☆☆ Người mới";
+
+}
+
+rank.innerText=text;
+
+}
