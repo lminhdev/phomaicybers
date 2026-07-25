@@ -1,254 +1,1016 @@
-const tasks = [
+/*========================================================
+
+Cyber Trace Simulator
+Version 1.4
+
+data.js
+
+Part 3.1
+
+========================================================*/
+
+
+const CASE_DATA={
+
+caseInfo:{
+
+id:"CASE-001",
+
+title:"Lừa đảo chuyển khoản",
+
+victim:"Nguyễn Văn A",
+
+loss:"50.000.000 VNĐ",
+
+risk:"HIGH",
+
+alias:"ShadowFox",
+
+ip:"185.201.12.88",
+
+country:"Campuchia",
+
+technique:"Phishing + Social Engineering"
+
+},
+
+modules:{
+
+email:[
 
 {
-    id:1,
 
-    title:"Task 1 - Email giả mạo",
+id:1,
 
-    question:"Nguyễn Văn A nhận được email yêu cầu xác minh tài khoản ngân hàng với địa chỉ:\n\nsupport@vietcombank-security.xyz\n\nDấu hiệu nào đáng nghi nhất?",
+title:"Email giả mạo",
 
-    options:[
+question:
 
-        "Email được gửi vào buổi tối",
+`Nguyễn Văn A nhận được email
 
-        "Tên miền .xyz thay vì tên miền chính thức của ngân hàng",
+support@vietcombank-security.xyz
 
-        "Email có logo ngân hàng",
+Điểm bất thường nhất là gì?`,
 
-        "Email có chữ 'support'"
+options:[
 
-    ],
+"Tên miền .xyz",
 
-    answer:1,
+"Logo ngân hàng",
 
-    explain:"Tên miền không thuộc ngân hàng chính thức là dấu hiệu phổ biến của email lừa đảo (phishing)."
+"Email gửi buổi tối",
+
+"Có chữ Support"
+
+],
+
+answer:0,
+
+success:
+
+"✔ Truy vết thành công",
+
+fail:
+
+"✖ Truy vết thất bại",
+
+explain:
+
+"Tên miền .xyz không phải tên miền chính thức của ngân hàng."
 
 },
 
 {
-    id:2,
 
-    title:"Task 2 - Website giả mạo",
+id:2,
 
-    question:"Bạn truy cập vào website:\n\nhttps://facebook-login-security.com\n\nĐây là dấu hiệu của hình thức tấn công nào?",
+title:"Reply-To",
 
-    options:[
+question:
 
-        "Brute Force",
+`Header email
 
-        "DDoS",
+From:
 
-        "Phishing",
+vietcombank@gmail.com
 
-        "SQL Injection"
+Reply-To:
 
-    ],
+abc123@qq.com
 
-    answer:2,
+Điều gì đáng nghi?`,
 
-    explain:"Website sử dụng tên miền gần giống Facebook để đánh cắp tài khoản."
+options:[
 
-},
+"Reply-To khác From",
 
-{
-    id:3,
+"Có Gmail",
 
-    title:"Task 3 - Phân tích IP",
+"Email quá ngắn",
 
-    question:"Trong nhật ký hệ thống xuất hiện IP:\n\n185.201.12.88\n\nBước điều tra đầu tiên hợp lý nhất là gì?",
+"Tiêu đề viết hoa"
 
-    options:[
+],
 
-        "Kiểm tra vị trí và thông tin của địa chỉ IP",
+answer:0,
 
-        "Cài lại Windows",
+success:
 
-        "Đổi mật khẩu WiFi",
+"✔ Truy vết thành công",
 
-        "Khởi động lại modem"
+fail:
 
-    ],
+"✖ Truy vết thất bại",
 
-    answer:0,
+explain:
 
-    explain:"Phân tích IP giúp xác định máy chủ, nhà mạng hoặc khu vực xuất phát."
+"Reply-To khác địa chỉ người gửi là dấu hiệu giả mạo."
 
 },
 
 {
-    id:4,
 
-    title:"Task 4 - Link rút gọn",
+id:3,
 
-    question:"Đối tượng gửi đường dẫn:\n\nhttps://bit.ly/3abcXYZ\n\nViệc nên làm trước khi truy cập là gì?",
+title:"Attachment",
 
-    options:[
+question:
 
-        "Mở trực tiếp",
+`File đính kèm
 
-        "Kiểm tra URL đích bằng công cụ mở rộng liên kết",
+HoaDon.pdf.exe
 
-        "Đổi sang trình duyệt khác",
+Điểm đáng nghi nhất?`,
 
-        "Tắt phần mềm diệt virus"
+options:[
 
-    ],
+"Tên quá dài",
 
-    answer:1,
+"Có hai phần mở rộng",
 
-    explain:"Link rút gọn có thể che giấu website độc hại."
+"Dung lượng nhỏ",
 
-},
+"Là PDF"
 
-{
-    id:5,
+],
 
-    title:"Task 5 - Tập tin đáng ngờ",
+answer:1,
 
-    question:"Sau khi mở email, trình duyệt yêu cầu tải tệp:\n\nHoaDon.pdf.exe\n\nĐiểm đáng nghi nhất là gì?",
+success:
 
-    options:[
+"✔ Truy vết thành công",
 
-        "Tên tệp viết bằng tiếng Việt",
+fail:
 
-        "Tệp có hai phần mở rộng (.pdf.exe)",
+"✖ Truy vết thất bại",
 
-        "Dung lượng nhỏ",
+explain:
 
-        "Tên tệp quá ngắn"
-
-    ],
-
-    answer:1,
-
-    explain:"Tệp .exe được ngụy trang thành tài liệu PDF để lừa người dùng chạy mã độc."
-
-},
-
-
-{
-    id:6,
-
-    title:"Task 6 - Mật khẩu",
-
-    question:"Mật khẩu nào dưới đây có độ mạnh cao nhất?",
-
-    options:[
-
-        "12345678",
-
-        "nguyenvana",
-
-        "P@5sW0rd!9xQ",
-
-        "abcdef123"
-
-    ],
-
-    answer:2,
-
-    explain:"Mật khẩu mạnh nên có chữ hoa, chữ thường, số, ký tự đặc biệt và đủ dài."
-
-},
-
-{
-    id:7,
-
-    title:"Task 7 - 2FA",
-
-    question:"Biện pháp nào giúp giảm nguy cơ bị chiếm tài khoản ngay cả khi lộ mật khẩu?",
-
-    options:[
-
-        "Đổi tên WiFi",
-
-        "Bật xác thực hai lớp (2FA)",
-
-        "Xóa lịch sử trình duyệt",
-
-        "Giảm độ sáng màn hình"
-
-    ],
-
-    answer:1,
-
-    explain:"Xác thực hai lớp yêu cầu thêm một bước xác minh ngoài mật khẩu."
-
-},
-
-{
-    id:8,
-
-    title:"Task 8 - Địa chỉ IP",
-
-    question:"Kết quả phân tích cho thấy IP truy cập thuộc máy chủ đặt tại Campuchia. Điều này cho phép kết luận điều gì?",
-
-    options:[
-
-        "Kẻ tấn công chắc chắn là người Campuchia",
-
-        "Máy chủ trung gian đặt tại Campuchia, chưa đủ để xác định danh tính",
-
-        "Máy tính nạn nhân đã bị hỏng",
-
-        "Người dùng đang sử dụng điện thoại Android"
-
-    ],
-
-    answer:1,
-
-    explain:"Địa chỉ IP chỉ phản ánh điểm kết nối hoặc máy chủ, không khẳng định quốc tịch hay danh tính."
-
-},
-
-{
-    id:9,
-
-    title:"Task 9 - VPN",
-
-    question:"Đối tượng sử dụng VPN trước khi thực hiện hành vi lừa đảo. VPN gây khó khăn cho việc truy vết vì:",
-
-    options:[
-
-        "Làm tăng tốc độ Internet",
-
-        "Ẩn hoặc thay đổi địa chỉ IP thật",
-
-        "Tăng dung lượng ổ cứng",
-
-        "Tự động xóa virus"
-
-    ],
-
-    answer:1,
-
-    explain:"VPN che giấu IP thật bằng cách chuyển lưu lượng qua máy chủ trung gian."
-
-},
-
-{
-    id:10,
-
-    title:"Task 10 - Kết thúc điều tra",
-
-    question:"Sau khi thu thập email, nhật ký truy cập, IP và các bằng chứng số, bước xử lý phù hợp nhất là gì?",
-
-    options:[
-
-        "Công khai toàn bộ thông tin nghi phạm lên mạng xã hội",
-
-        "Lưu giữ bằng chứng và chuyển cho cơ quan có thẩm quyền",
-
-        "Xóa toàn bộ dữ liệu",
-
-        "Gửi email đe dọa đối tượng"
-
-    ],
-
-    answer:1,
-
-    explain:"Bằng chứng cần được bảo quản và chuyển cho cơ quan chức năng để xử lý theo quy định."
+"Tệp .exe được ngụy trang thành PDF."
 
 }
 
-];
+],
+
+url:[
+
+{
+
+id:1,
+
+title:"URL",
+
+question:
+
+`https://facebook-login-security.com`
+
+,
+
+options:[
+
+"URL chính thức",
+
+"Website giả mạo",
+
+"Trang Github",
+
+"Cloud Storage"
+
+],
+
+answer:1,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Tên miền gần giống Facebook để lừa đăng nhập."
+
+},
+
+{
+
+id:2,
+
+title:"Link rút gọn",
+
+question:
+
+`https://bit.ly/abc123`
+
+,
+
+options:[
+
+"Mở ngay",
+
+"Dùng công cụ mở rộng URL",
+
+"Tắt Antivirus",
+
+"Đổi WiFi"
+
+],
+
+answer:1,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Cần mở rộng URL trước khi truy cập."
+
+},
+
+{
+
+id:3,
+
+title:"HTTPS",
+
+question:
+
+"Một website không có HTTPS có thể gây rủi ro gì?",
+
+options:[
+
+"Dữ liệu truyền không được mã hóa",
+
+"Tăng tốc Internet",
+
+"Tiết kiệm pin",
+
+"Không có rủi ro"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"HTTPS giúp mã hóa dữ liệu."
+
+}
+
+],
+
+whois:[/*========================================================
+PART 3.2
+WHOIS + DNS + IP
+========================================================*/
+
+{
+
+id:1,
+
+title:"WHOIS - Ngày đăng ký",
+
+question:
+
+`Tên miền
+
+facebook-login-security.com
+
+được đăng ký cách đây 2 ngày.
+
+Điều này cho thấy điều gì?`,
+
+options:[
+
+"Có khả năng là website giả mạo",
+
+"Facebook vừa đổi tên miền",
+
+"Website chắc chắn an toàn",
+
+"Không thể kết luận gì"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Tên miền mới đăng ký thường được sử dụng trong các chiến dịch phishing."
+
+},
+
+{
+
+id:2,
+
+title:"WHOIS - Registrar",
+
+question:
+
+"Thông tin WHOIS nào hữu ích nhất khi điều tra?",
+
+options:[
+
+"Registrar",
+
+"Ngày đăng ký",
+
+"Abuse Contact",
+
+"Tất cả đều quan trọng"
+
+],
+
+answer:3,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Mỗi trường trong WHOIS đều có giá trị đối với điều tra số."
+
+},
+
+{
+
+id:3,
+
+title:"WHOIS Privacy",
+
+question:
+
+"Dịch vụ ẩn thông tin WHOIS thường nhằm mục đích gì?",
+
+options:[
+
+"Bảo vệ quyền riêng tư của chủ sở hữu",
+
+"Tăng tốc Internet",
+
+"Chống virus",
+
+"Tăng SEO"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"WHOIS Privacy che giấu thông tin đăng ký, nhưng không đồng nghĩa website là độc hại."
+
+}
+
+],
+
+dns:[
+
+{
+
+id:1,
+
+title:"DNS Record",
+
+question:
+
+"MX Record dùng để làm gì?",
+
+options:[
+
+"Mail Server",
+
+"Địa chỉ IPv4",
+
+"SSL",
+
+"CDN"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"MX Record xác định máy chủ thư điện tử."
+
+},
+
+{
+
+id:2,
+
+title:"DNS",
+
+question:
+
+"A Record có chức năng gì?",
+
+options:[
+
+"Liên kết tên miền với địa chỉ IPv4",
+
+"Liên kết Email",
+
+"Chứa chứng chỉ SSL",
+
+"Lưu mật khẩu"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"A Record ánh xạ Domain → IPv4."
+
+},
+
+{
+
+id:3,
+
+title:"TXT Record",
+
+question:
+
+"TXT Record thường dùng để triển khai công nghệ nào?",
+
+options:[
+
+"SPF / DKIM",
+
+"Bluetooth",
+
+"VPN",
+
+"DHCP"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"SPF và DKIM thường sử dụng TXT Record."
+
+}
+
+],
+
+ip:[
+
+{
+
+id:1,
+
+title:"IP Intelligence",
+
+question:
+
+`185.201.12.88`
+
+,
+
+options:[
+
+"Đây chắc chắn là IP của tội phạm",
+
+"Đây chỉ là địa chỉ cần tiếp tục điều tra",
+
+"Đây là IP nội bộ",
+
+"Đây là MAC Address"
+
+],
+
+answer:1,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Không thể kết luận danh tính chỉ dựa trên địa chỉ IP."
+
+},
+
+{
+
+id:2,
+
+title:"VPN",
+
+question:
+
+"Tại sao VPN gây khó khăn cho việc truy vết?",
+
+options:[
+
+"Ẩn IP thật",
+
+"Tăng RAM",
+
+"Diệt virus",
+
+"Đổi DNS tự động"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"VPN chuyển lưu lượng qua máy chủ trung gian để che giấu IP."
+
+},
+
+{
+
+id:3,
+
+title:"Hosting",
+
+question:
+
+"Khi IP thuộc một nhà cung cấp VPS, điều này có nghĩa là:",
+
+options:[
+
+"IP thuộc máy chủ trung gian",
+
+"Đã xác định được nghi phạm",
+
+"Máy tính nạn nhân bị lỗi",
+
+"Địa chỉ IP giả"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Máy chủ VPS có thể chỉ là điểm trung chuyển, không phải vị trí thật của đối tượng."
+
+}
+
+],
+
+log:[/*========================================================
+PART 3.3
+LOG + METADATA + OSINT + TIMELINE
+========================================================*/
+
+{
+
+id:1,
+
+title:"Web Server Log",
+
+question:
+
+`Log ghi nhận:
+
+POST /login
+
+Status:200
+
+Có ý nghĩa gì?`,
+
+options:[
+
+"Đăng nhập thành công",
+
+"Website bị lỗi",
+
+"Máy chủ bị tắt",
+
+"Không xác định"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Mã trạng thái HTTP 200 cho biết yêu cầu đã được xử lý thành công."
+
+},
+
+{
+
+id:2,
+
+title:"User-Agent",
+
+question:
+
+"User-Agent trong log dùng để làm gì?",
+
+options:[
+
+"Nhận diện trình duyệt hoặc thiết bị",
+
+"Lưu mật khẩu",
+
+"Xóa cookie",
+
+"Ẩn địa chỉ IP"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"User-Agent giúp nhận diện trình duyệt, hệ điều hành hoặc thiết bị."
+
+},
+
+{
+
+id:3,
+
+title:"Access Log",
+
+question:
+
+"Nếu một IP gửi hàng nghìn yêu cầu trong thời gian ngắn, dấu hiệu phù hợp nhất là:",
+
+options:[
+
+"Truy cập bình thường",
+
+"Tấn công hoặc hành vi bất thường",
+
+"Cập nhật Windows",
+
+"Đồng bộ thời gian"
+
+],
+
+answer:1,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Lưu lượng bất thường trong thời gian ngắn cần được điều tra thêm."
+
+}
+
+],
+
+metadata:[
+
+{
+
+id:1,
+
+title:"EXIF",
+
+question:
+
+"EXIF của ảnh thường chứa thông tin nào?",
+
+options:[
+
+"Thiết bị chụp",
+
+"Thời gian",
+
+"GPS (nếu có)",
+
+"Tất cả các đáp án trên"
+
+],
+
+answer:3,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"EXIF có thể lưu nhiều thông tin hữu ích cho điều tra."
+
+},
+
+{
+
+id:2,
+
+title:"GPS",
+
+question:
+
+"Nếu ảnh không còn dữ liệu GPS thì có thể kết luận gì?",
+
+options:[
+
+"Ảnh chắc chắn là giả",
+
+"EXIF có thể đã bị xóa hoặc thiết bị không ghi GPS",
+
+"Ảnh bị virus",
+
+"Không thể mở ảnh"
+
+],
+
+answer:1,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Thiếu GPS không đồng nghĩa ảnh là giả."
+
+}
+
+],
+
+osint:[
+
+{
+
+id:1,
+
+title:"Username",
+
+question:
+
+"Nếu cùng một username xuất hiện trên nhiều nền tảng mạng xã hội thì:",
+
+options:[
+
+"Có thể là cùng một người, cần kiểm chứng thêm",
+
+"Chắc chắn là cùng một người",
+
+"Không có giá trị điều tra",
+
+"Đó là tài khoản giả"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"OSINT cần kết hợp nhiều nguồn trước khi đưa ra kết luận."
+
+},
+
+{
+
+id:2,
+
+title:"Avatar",
+
+question:
+
+"Ảnh đại diện giống nhau trên nhiều tài khoản có ý nghĩa gì?",
+
+options:[
+
+"Là một manh mối cần đối chiếu",
+
+"Chắc chắn cùng chủ sở hữu",
+
+"Không có ý nghĩa",
+
+"Là lỗi hệ thống"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Avatar chỉ là một chỉ dấu, không đủ để xác định danh tính."
+
+},
+
+{
+
+id:3,
+
+title:"Nguồn mở",
+
+question:
+
+"OSINT là viết tắt của:",
+
+options:[
+
+"Open Source Intelligence",
+
+"Online Security Internet",
+
+"Open Security Interface",
+
+"Official Secure Intelligence"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"OSINT là quá trình thu thập và phân tích thông tin từ các nguồn công khai."
+
+}
+
+],
+
+timeline:[
+
+{
+
+id:1,
+
+title:"Timeline",
+
+question:
+
+"Bước nào nên thực hiện trước trong điều tra số?",
+
+options:[
+
+"Thu thập và bảo toàn chứng cứ",
+
+"Công khai nghi phạm",
+
+"Xóa dữ liệu",
+
+"Khởi động lại toàn bộ hệ thống"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Thu thập và bảo toàn chứng cứ là nguyên tắc quan trọng trong điều tra số."
+
+},
+
+{
+
+id:2,
+
+title:"Chuỗi sự kiện",
+
+question:
+
+"Sau khi phân tích email, URL và IP, bước hợp lý tiếp theo là:",
+
+options:[
+
+"Đối chiếu các bằng chứng để xây dựng timeline",
+
+"Xóa log",
+
+"Đăng thông tin lên mạng xã hội",
+
+"Bỏ qua các bằng chứng"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Timeline giúp tái hiện diễn biến vụ việc theo trình tự thời gian."
+
+},
+
+{
+
+id:3,
+
+title:"Kết thúc điều tra",
+
+question:
+
+"Khi đã hoàn tất phân tích kỹ thuật, cần làm gì?",
+
+options:[
+
+"Lập báo cáo và chuyển cơ quan có thẩm quyền",
+
+"Xóa toàn bộ dữ liệu",
+
+"Công bố danh tính nghi phạm",
+
+"Tự ý truy cập hệ thống của đối tượng"
+
+],
+
+answer:0,
+
+success:"✔ Truy vết thành công",
+
+fail:"✖ Truy vết thất bại",
+
+explain:
+
+"Kết quả điều tra cần được tổng hợp và xử lý theo đúng quy định pháp luật."
+
+}
+
+]
+
+}
+
+};
+
