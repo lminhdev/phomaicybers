@@ -1,150 +1,351 @@
-const home = document.getElementById("home");
-const game = document.getElementById("game");
-const result = document.getElementById("result");
+/*======================================================
+Cyber Trace Simulator v1.4
+script.js
+Part 4.1
+======================================================*/
+
+/* =========================
+   GLOBAL VARIABLES
+========================= */
+
+const screens = {
+    home: document.getElementById("homeScreen"),
+    dashboard: document.getElementById("dashboardScreen"),
+    module: document.getElementById("moduleScreen"),
+    report: document.getElementById("reportScreen")
+};
 
 const startBtn = document.getElementById("startBtn");
-const nextBtn = document.getElementById("nextBtn");
+const restartBtn = document.getElementById("restartBtn");
+const backBtn = document.getElementById("backBtn");
 
-const question = document.getElementById("question");
-const answers = document.getElementById("answers");
+const moduleTitle = document.getElementById("moduleTitle");
+const moduleContent = document.getElementById("moduleContent");
 
-const statusText = document.getElementById("status");
-
-const currentTask = document.getElementById("currentTask");
-const totalTask = document.getElementById("totalTask");
-
-const scoreText = document.getElementById("score");
-
+const scoreElement = document.getElementById("score");
 const progressBar = document.getElementById("progressBar");
 
-const alias = document.getElementById("alias");
-const ip = document.getElementById("ip");
-const country = document.getElementById("country");
-const finalScore = document.getElementById("finalScore");
-const rank = document.getElementById("rank");
+/* =========================
+   MODULE ORDER
+========================= */
 
-let currentIndex = 0;
-let score = 0;
-let answered = false;
-
-const aliases = [
-
-    "phomaiconmelcuoi",
-    "phomaiconmelcuoi",
-    "phomaiconmelcuoi",
-    "phomaiconmelcuoi",
-    "phomaiconmelcuoi",
-    "phomaiconmelcuoi",
-    "phomaiconmelcuoi",
-    "saygex69"
-
+const moduleOrder = [
+    "email",
+    "url",
+    "whois",
+    "dns",
+    "ip",
+    "log",
+    "metadata",
+    "osint",
+    "timeline"
 ];
 
-const ips = [
+/* =========================
+   GAME STATE
+========================= */
 
-    "185.201.12.88",
-    "103.74.21.54",
-    "91.202.44.71",
-    "194.61.100.25",
-    "178.120.55.81",
-    "45.88.201.9",
-    "103.221.88.15"
+let game = {
 
-];
+    score: 0,
 
-const countries = [
+    completed: 0,
 
-    "Campuchia",
-    "Singapore",
-    "Malaysia",
-    "Hong Kong",
-    "Thái Lan",
-    "Việt Nam (VPN)",
-    "Không xác định"
+    currentModule: null,
 
-];
+    currentQuestion: 0,
 
-function randomItem(array){
+    unlocked: 1,
 
-    return array[Math.floor(Math.random()*array.length)];
+    evidence: []
+
+};
+
+/* =========================
+   SHOW SCREEN
+========================= */
+
+function showScreen(name){
+
+    Object.values(screens).forEach(screen=>{
+
+        screen.classList.remove("active");
+
+    });
+
+    screens[name].classList.add("active");
 
 }
+
+/* =========================
+   UPDATE SCORE
+========================= */
+
+function updateScore(){
+
+    scoreElement.textContent = game.score;
+
+}
+
+/* =========================
+   UPDATE PROGRESS
+========================= */
 
 function updateProgress(){
 
     const percent =
-        (currentIndex / tasks.length) * 100;
+        (game.completed / moduleOrder.length) * 100;
 
     progressBar.style.width = percent + "%";
 
 }
 
-function initialize(){
+/* =========================
+   RESET GAME
+========================= */
 
-    totalTask.textContent = tasks.length;
+function resetGame(){
 
-    currentTask.textContent = 1;
+    game.score = 0;
 
-    scoreText.textContent = 0;
+    game.completed = 0;
 
-    progressBar.style.width = "0%";
+    game.currentModule = null;
 
-}
+    game.currentQuestion = 0;
 
-startBtn.addEventListener("click",()=>{
+    game.unlocked = 1;
 
-    home.classList.add("hidden");
+    game.evidence = [];
 
-    game.classList.remove("hidden");
-
-    initialize();
-
-    loadTask();
-
-});
-
-function loadTask(){
-
-    answered = false;
-
-    nextBtn.classList.add("hidden");
-
-    statusText.className = "";
-    statusText.textContent = "";
+    updateScore();
 
     updateProgress();
 
-    const task = tasks[currentIndex];
+}
 
-    currentTask.textContent = currentIndex + 1;
+/* =========================
+   START GAME
+========================= */
 
-    question.innerHTML =
-        "<small>" + task.title + "</small><br><br>" +
-        task.question.replace(/\n/g,"<br>");
+function startGame(){
 
-    answers.innerHTML = "";
+    resetGame();
 
-    task.options.forEach((option,index)=>{
+    unlockModules();
 
-        const button = document.createElement("button");
+    showScreen("dashboard");
 
-        button.className = "answer";
+}
 
-        button.innerHTML = option;
+/* =========================
+   DASHBOARD
+========================= */
 
-        button.addEventListener("click",()=>{
+function unlockModules(){
 
-            checkAnswer(index);
+    const buttons =
+        document.querySelectorAll(".module");
 
-        });
+    buttons.forEach((button,index)=>{
 
-        answers.appendChild(button);
+        button.classList.remove(
+            "locked",
+            "active",
+            "completed"
+        );
+
+        if(index >= game.unlocked){
+
+            button.classList.add("locked");
+
+        }
 
     });
 
 }
 
-function disableAnswers(){
+/* =========================
+   MODULE CLICK
+========================= */
+
+document
+.querySelectorAll(".module")
+.forEach((button,index)=>{
+
+    button.addEventListener("click",()=>{
+
+        if(index >= game.unlocked){
+
+            return;
+
+        }
+
+        const moduleName =
+            button.dataset.module;
+
+        openModule(moduleName);
+
+    });
+
+});
+
+/* =========================
+   BUTTON EVENTS
+========================= */
+
+startBtn.addEventListener("click",startGame);
+
+restartBtn.addEventListener("click",()=>{
+
+    location.reload();
+
+});
+
+backBtn.addEventListener("click",()=>{
+
+    showScreen("dashboard");
+
+});
+
+/* =========================
+   PLACEHOLDER
+========================= */
+
+/*
+Các hàm dưới đây sẽ được
+cài đặt ở Phần 4.2
+
+- openModule()
+- renderQuestion()
+- renderAnswers()
+- nextQuestion()
+
+*/
+/*======================================================
+Part 4.2
+MODULE ENGINE
+======================================================*/
+
+/* =========================
+   OPEN MODULE
+========================= */
+
+function openModule(moduleName){
+
+    game.currentModule = moduleName;
+
+    game.currentQuestion = 0;
+
+    showScreen("module");
+
+    const title =
+        moduleName.charAt(0).toUpperCase() +
+        moduleName.slice(1);
+
+    moduleTitle.textContent = title;
+    highlightModule();
+    renderQuestion();
+
+}
+
+/* =========================
+   GET QUESTIONS
+========================= */
+
+function getCurrentQuestions(){
+
+    return CASE_DATA.modules[game.currentModule] || [];
+
+}
+
+/* =========================
+   RENDER QUESTION
+========================= */
+
+function renderQuestion(){
+
+    const questions = getCurrentQuestions();
+
+    if(game.currentQuestion >= questions.length){
+
+        finishModule();
+
+        return;
+
+    }
+
+    const q = questions[game.currentQuestion];
+
+    let html = "";
+
+    html += `
+        <div class="question-card">
+
+            <h3>${q.title}</h3>
+
+            <p>${q.question}</p>
+
+            <div
+                class="answers"
+                id="answers">
+
+            </div>
+
+            <div
+                class="status"
+                id="status">
+
+            </div>
+
+        </div>
+    `;
+
+    moduleContent.innerHTML = html;
+
+    renderAnswers(q);
+
+}
+
+/* =========================
+   RENDER ANSWERS
+========================= */
+
+function renderAnswers(question){
+
+    const container =
+        document.getElementById("answers");
+
+    question.options.forEach((text,index)=>{
+
+        const button =
+            document.createElement("button");
+
+        button.className = "answer";
+
+        button.textContent = text;
+
+        button.addEventListener("click",()=>{
+
+            answerQuestion(
+                index,
+                question,
+                button
+            );
+
+        });
+
+        container.appendChild(button);
+
+    });
+
+}
+
+/* =========================
+   LOCK ANSWERS
+========================= */
+
+function lockAnswers(){
 
     document
         .querySelectorAll(".answer")
@@ -156,16 +357,155 @@ function disableAnswers(){
 
 }
 
-function highlightCorrectAnswer(){
+/* =========================
+   NEXT QUESTION
+========================= */
 
-    const buttons =
+function nextQuestion(){
+
+    game.currentQuestion++;
+
+    renderQuestion();
+
+}
+
+/* =========================
+   STATUS
+========================= */
+
+function setStatus(message,success){
+
+    const status =
+        document.getElementById("status");
+
+    status.textContent = message;
+
+    status.className =
+        success
+        ? "status success"
+        : "status fail";
+
+}
+/*======================================================
+Part 4.3
+ANSWER ENGINE
+======================================================*/
+
+/* =========================
+   ANSWER QUESTION
+========================= */
+
+function answerQuestion(index, question, button){
+
+    lockAnswers();
+
+    const answers =
         document.querySelectorAll(".answer");
 
-    buttons.forEach((button,index)=>{
+    const correct =
+        question.answer;
 
-        if(index===tasks[currentIndex].answer){
+    answers.forEach((item,i)=>{
 
-            button.classList.add("correct");
+        if(i===correct){
+
+            item.classList.add("correct");
+
+        }
+
+    });
+
+    if(index===correct){
+
+        button.classList.add("correct");
+
+        game.score += 10;
+
+        game.evidence.push({
+
+            module:game.currentModule,
+
+            title:question.title
+
+        });
+
+        updateScore();
+
+        setStatus(
+
+            question.success ||
+
+            "✔ Truy vết thành công",
+
+            true
+
+        );
+
+    }
+
+    else{
+
+        button.classList.add("wrong");
+
+        setStatus(
+
+            question.fail ||
+
+            "✖ Truy vết thất bại",
+
+            false
+
+        );
+
+    }
+
+    setTimeout(()=>{
+
+        nextQuestion();
+
+    },1500);
+
+}
+
+/* =========================
+   FINISH MODULE
+========================= */
+
+function finishModule(){
+
+    game.completed++;
+
+    updateProgress();
+
+    completeCurrentModule();
+
+    unlockNextModule();
+
+    showScreen("dashboard");
+
+}
+
+/* =========================
+   COMPLETE MODULE
+========================= */
+
+function completeCurrentModule(){
+
+    document
+    .querySelectorAll(".module")
+    .forEach(button=>{
+
+        if(
+
+            button.dataset.module===
+
+            game.currentModule
+
+        ){
+
+            button.classList.remove("active");
+
+            button.classList.add("completed");
 
         }
 
@@ -173,175 +513,605 @@ function highlightCorrectAnswer(){
 
 }
 
-function highlightSelectedAnswer(index){
+/* =========================
+   UNLOCK NEXT
+========================= */
 
-    const buttons =
-        document.querySelectorAll(".answer");
+function unlockNextModule(){
 
-    if(index===tasks[currentIndex].answer){
+    if(
 
-        buttons[index].classList.add("correct");
+        game.unlocked <
 
-    }else{
+        moduleOrder.length
 
-        buttons[index].classList.add("wrong");
+    ){
+
+        game.unlocked++;
+
+    }
+
+    unlockModules();
+
+    checkCaseFinished();
+
+}
+
+/* =========================
+   CHECK CASE
+========================= */
+
+function checkCaseFinished(){
+
+    if(
+
+        game.completed >=
+
+        moduleOrder.length
+
+    ){
+
+        showReport();
 
     }
 
 }
 
-function checkAnswer(selectedIndex){
+/* =========================
+   ACTIVE MODULE
+========================= */
 
-    if(answered) return;
+function highlightModule(){
 
-    answered = true;
+    document
+    .querySelectorAll(".module")
+    .forEach(button=>{
 
-    disableAnswers();
+        button.classList.remove("active");
 
-    highlightSelectedAnswer(selectedIndex);
+        if(
 
-    highlightCorrectAnswer();
+            button.dataset.module===
 
-    statusText.className = "trace";
+            game.currentModule
 
-    statusText.textContent =
-        "🔍 Đang phân tích dấu vết...";
+        ){
+
+            button.classList.add("active");
+
+        }
+
+    });
+
+}
+/*======================================================
+Part 4.4
+UTILITY + TOAST + EVIDENCE
+======================================================*/
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message,type="info"){
+
+    const old=document.querySelector(".toast");
+
+    if(old){
+        old.remove();
+    }
+
+    const toast=document.createElement("div");
+
+    toast.className="toast";
+
+    switch(type){
+
+        case "success":
+            toast.style.borderColor="#2aff9b";
+            break;
+
+        case "error":
+            toast.style.borderColor="#ff5d5d";
+            break;
+
+        default:
+            toast.style.borderColor="#39d8ff";
+
+    }
+
+    toast.textContent=message;
+
+    document.body.appendChild(toast);
 
     setTimeout(()=>{
 
-        showAnswerResult(selectedIndex);
+        toast.remove();
 
-    },1000);
+    },2500);
 
 }
 
-function showAnswerResult(selectedIndex){
+/* =========================
+   LOADING
+========================= */
 
-    const task = tasks[currentIndex];
+function showLoading(){
 
-    if(selectedIndex === task.answer){
+    moduleContent.innerHTML=`
 
-        score++;
+        <div class="terminal">
 
-        scoreText.textContent = score;
+            <div class="terminal-top">
 
-        statusText.className = "success";
+                <div class="dot red"></div>
 
-        statusText.innerHTML = `
-            ✅ Truy vết thành công
-            <br><br>
-            <small>${task.explain}</small>
+                <div class="dot yellow"></div>
+
+                <div class="dot green"></div>
+
+            </div>
+
+            <div class="terminal-body">
+
+                Đang phân tích dữ liệu...
+
+                <div class="loader">
+
+                    <span></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+/* =========================
+   EVIDENCE
+========================= */
+
+function renderEvidenceBoard(){
+
+    if(game.evidence.length===0){
+
+        return `
+            <p>Chưa có bằng chứng.</p>
         `;
 
     }
 
-    else{
+    let html='<div class="evidence-board">';
 
-        statusText.className = "fail";
+    game.evidence.forEach(item=>{
 
-        statusText.innerHTML = `
-            ❌ Truy vết thất bại
-            <br><br>
-            <small>${task.explain}</small>
+        html+=`
+
+        <div class="evidence">
+
+            <h4>${item.module.toUpperCase()}</h4>
+
+            <small>${item.title}</small>
+
+        </div>
+
         `;
 
-    }
+    });
 
-    nextBtn.classList.remove("hidden");
+    html+='</div>';
 
-}
-
-nextBtn.addEventListener("click",()=>{
-
-    currentIndex++;
-
-    if(currentIndex >= tasks.length){
-
-        showResult();
-
-        return;
-
-    }
-
-    loadTask();
-
-});
-
-function showResult(){
-
-    game.classList.add("hidden");
-
-    result.classList.remove("hidden");
-
-    progressBar.style.width = "100%";
-
-    alias.textContent = randomItem(aliases);
-
-    ip.textContent = randomItem(ips);
-
-    country.textContent = randomItem(countries);
-
-    finalScore.textContent =
-        score + " / " + tasks.length;
-
-    let text = "";
-
-    if(score === tasks.length){
-
-        text =
-        "🏆 Chuyên gia An ninh mạng";
-
-    }
-
-    else if(score >= 8){
-
-        text =
-        "🥇 Điều tra viên cao cấp";
-
-    }
-
-    else if(score >= 6){
-
-        text =
-        "🥈 Điều tra viên";
-
-    }
-
-    else if(score >= 4){
-
-        text =
-        "🥉 Thực tập sinh SOC";
-
-    }
-
-    else{
-
-        text =
-        "📖 Cần luyện tập thêm";
-
-    }
-
-    rank.textContent = text;
+    return html;
 
 }
 
-function resetGame(){
+/* =========================
+   TERMINAL MESSAGE
+========================= */
 
-    currentIndex = 0;
+function terminalMessage(text){
 
-    score = 0;
+    return `
 
-    answered = false;
+    <div class="terminal">
 
-    scoreText.textContent = "0";
+        <div class="terminal-top">
 
-    progressBar.style.width = "0%";
+            <div class="dot red"></div>
+
+            <div class="dot yellow"></div>
+
+            <div class="dot green"></div>
+
+        </div>
+
+        <div class="terminal-body">
+
+${text}
+
+        </div>
+
+    </div>
+
+    `;
 
 }
 
-initialize();
+/* =========================
+   MODULE TITLE
+========================= */
 
-console.log(
-    "Cyber Trace System v2.0 loaded."
+const moduleNames={
+
+email:"Email Forensics",
+
+url:"URL Analysis",
+
+whois:"WHOIS",
+
+dns:"DNS Analysis",
+
+ip:"IP Intelligence",
+
+log:"Log Analysis",
+
+metadata:"Metadata",
+
+osint:"OSINT",
+
+timeline:"Timeline"
+
+};
+
+/* =========================
+   UPDATE TITLE
+========================= */
+
+function updateModuleTitle(){
+
+    moduleTitle.textContent=
+
+        moduleNames[game.currentModule] ||
+
+        game.currentModule;
+
+}
+
+/* =========================
+   OVERRIDE
+========================= */
+
+const oldOpenModule=openModule;
+
+openModule=function(moduleName){
+
+    showLoading();
+
+    setTimeout(()=>{
+
+        oldOpenModule(moduleName);
+
+        updateModuleTitle();
+
+        showToast(
+
+            "Đã mở module " +
+
+            moduleNames[moduleName],
+
+            "success"
+
+        );
+
+    },600);
+
+};
+
+/* =========================
+   CASE INFORMATION
+========================= */
+
+function getCaseInfo(){
+
+    return CASE_DATA.caseInfo;
+
+}
+
+/* =========================
+   SCORE PERCENT
+========================= */
+
+function getAccuracy(){
+
+    const totalQuestions=
+
+        game.completed*3+
+
+        game.currentQuestion;
+
+    if(totalQuestions<=0){
+
+        return 0;
+
+    }
+
+    return Math.round(
+
+        game.score/
+
+        (totalQuestions*10)
+
+        *100
+
+    );
+
+}
+
+/* =========================
+   RANK
+========================= */
+
+function getRank(){
+
+    if(game.score>=240){
+
+        return "S";
+
+    }
+
+    if(game.score>=200){
+
+        return "A";
+
+    }
+
+    if(game.score>=150){
+
+        return "B";
+
+    }
+
+    if(game.score>=100){
+
+        return "C";
+
+    }
+
+    return "D";
+
+}
+/*======================================================
+Part 4.5
+REPORT ENGINE
+======================================================*/
+
+/* =========================
+   SHOW REPORT
+========================= */
+
+function showReport(){
+
+    showScreen("report");
+
+    const info = getCaseInfo();
+
+    document.getElementById("alias").textContent =
+        info.alias;
+
+    document.getElementById("criminalIP").textContent =
+        info.ip;
+
+    document.getElementById("country").textContent =
+        info.country;
+
+    document.getElementById("technique").textContent =
+        info.technique;
+
+    document.getElementById("finalScore").textContent =
+        game.score;
+
+    const evidenceElement =
+        document.getElementById("evidenceCount");
+
+    if(evidenceElement){
+
+        evidenceElement.textContent =
+            game.evidence.length;
+
+    }
+
+    createReportExtra();
+
+}
+
+/* =========================
+   REPORT EXTRA
+========================= */
+
+function createReportExtra(){
+
+    const report =
+        document.querySelector(".report-card");
+
+    let old =
+        document.getElementById("extraReport");
+
+    if(old){
+
+        old.remove();
+
+    }
+
+    const div =
+        document.createElement("div");
+
+    div.id = "extraReport";
+
+    div.innerHTML = `
+
+        <hr>
+
+        <h2>KẾT QUẢ ĐIỀU TRA</h2>
+
+        <p>
+
+        <strong>Xếp hạng:</strong>
+
+        ${getRank()}
+
+        </p>
+
+        <p>
+
+        <strong>Độ chính xác:</strong>
+
+        ${getAccuracy()}%
+
+        </p>
+
+        <p>
+
+        <strong>Bằng chứng thu thập:</strong>
+
+        ${game.evidence.length}
+
+        </p>
+
+        <br>
+
+        <h3>Evidence Board</h3>
+
+        ${renderEvidenceBoard()}
+
+    `;
+
+    report.insertBefore(
+
+        div,
+
+        restartBtn
+
+    );
+
+}
+
+/* =========================
+   SAVE RESULT
+========================= */
+
+function saveResult(){
+
+    const result = {
+
+        score: game.score,
+
+        evidence: game.evidence,
+
+        rank: getRank(),
+
+        accuracy: getAccuracy(),
+
+        date: new Date().toLocaleString()
+
+    };
+
+    localStorage.setItem(
+
+        "CyberTraceResult",
+
+        JSON.stringify(result)
+
+    );
+
+}
+
+/* =========================
+   LOAD RESULT
+========================= */
+
+function loadResult(){
+
+    const data =
+
+        localStorage.getItem(
+
+            "CyberTraceResult"
+
+        );
+
+    if(!data){
+
+        return null;
+
+    }
+
+    return JSON.parse(data);
+
+}
+
+/* =========================
+   REPORT OVERRIDE
+========================= */
+
+const oldShowReport = showReport;
+
+showReport = function(){
+
+    saveResult();
+
+    oldShowReport();
+
+    showToast(
+
+        "Hoàn thành điều tra!",
+
+        "success"
+
+    );
+
+}
+
+/* =========================
+   RESTART
+========================= */
+
+restartBtn.addEventListener(
+
+    "click",
+
+    ()=>{
+
+        localStorage.removeItem(
+
+            "CyberTraceResult"
+
+        );
+
+        location.reload();
+
+    }
+
 );
 
+/* =========================
+   STARTUP
+========================= */
+
+window.addEventListener(
+
+    "load",
+
+    ()=>{
+
+        updateScore();
+
+        updateProgress();
+
+        unlockModules();
+
+    }
+
+);
