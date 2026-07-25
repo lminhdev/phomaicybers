@@ -169,25 +169,25 @@ function unlockModules(){
    MODULE CLICK
 ========================= */
 
+/* =========================
+   MODULE CLICK
+========================= */
 document
 .querySelectorAll(".module")
 .forEach((button,index)=>{
-
     button.addEventListener("click",()=>{
-
         if(index >= game.unlocked){
-
             return;
-
         }
-
-        const moduleName =
-            button.dataset.module;
-
-        openModule(moduleName);
-
+        const moduleName = button.dataset.module;
+        
+        // Thêm khối if-else để phân loại nút Report
+        if(moduleName === "report"){
+            showReport();
+        } else {
+            openModule(moduleName);
+        }
     });
-
 });
 
 /* =========================
@@ -472,17 +472,15 @@ function answerQuestion(index, question, button){
 ========================= */
 
 function finishModule(){
-
     game.completed++;
-
     updateProgress();
-
     completeCurrentModule();
-
     unlockNextModule();
-
-    showScreen("dashboard");
-
+    
+    // Chỉ quay lại dashboard nếu vụ án chưa kết thúc
+    if(game.completed < moduleOrder.length){
+        showScreen("dashboard");
+    }
 }
 
 /* =========================
@@ -518,23 +516,12 @@ function completeCurrentModule(){
 ========================= */
 
 function unlockNextModule(){
-
-    if(
-
-        game.unlocked <
-
-        moduleOrder.length
-
-    ){
-
+    // Cho phép mở khóa đến module thứ 10 (Report)
+    if(game.unlocked <= moduleOrder.length){
         game.unlocked++;
-
     }
-
     unlockModules();
-
     checkCaseFinished();
-
 }
 
 /* =========================
