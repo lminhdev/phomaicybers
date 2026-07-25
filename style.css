@@ -1,7 +1,11 @@
-/* ===========================
-   HÀNH TRÌNH TRUY VẾT
-   Cyber Security Theme
-=========================== */
+/* =====================================
+   HÀNH TRÌNH TRUY VẾT TỘI PHẠM MẠNG
+   Cyber Trace System v2.0
+===================================== */
+
+/* =========================
+RESET
+========================= */
 
 *{
     margin:0;
@@ -14,64 +18,100 @@ html{
 }
 
 body{
-    font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
-    background:#07131f;
-    color:#eaf6ff;
-    min-height:100vh;
+
+    font-family:
+    "Segoe UI",
+    Tahoma,
+    Geneva,
+    Verdana,
+    sans-serif;
+
+    background:#06131d;
+
+    color:#e8f6ff;
+
     overflow-x:hidden;
+
+    min-height:100vh;
+
     position:relative;
+
 }
 
-/* ===========================
+/* =========================
 BACKGROUND
-=========================== */
+========================= */
 
 body::before{
+
     content:"";
+
     position:fixed;
+
     inset:0;
+
     background:
-        radial-gradient(circle at top,#00f7ff22,transparent 45%),
-        radial-gradient(circle at bottom,#00ff8833,transparent 40%);
-    z-index:-3;
+
+    radial-gradient(circle at top,
+    rgba(0,255,255,.12),
+    transparent 45%),
+
+    radial-gradient(circle at bottom,
+    rgba(0,180,255,.10),
+    transparent 45%);
+
+    z-index:-5;
+
 }
 
-.grid{
+.grid-bg{
+
     position:fixed;
+
     inset:0;
 
     background-image:
 
-    linear-gradient(#00d9ff15 1px,transparent 1px),
+    linear-gradient(
+    rgba(0,255,255,.08) 1px,
+    transparent 1px),
 
-    linear-gradient(90deg,#00d9ff15 1px,transparent 1px);
+    linear-gradient(
+    90deg,
+    rgba(0,255,255,.08) 1px,
+    transparent 1px);
 
     background-size:40px 40px;
 
-    animation:gridMove 18s linear infinite;
+    animation:gridMove 20s linear infinite;
 
-    z-index:-2;
+    z-index:-4;
+
 }
 
 @keyframes gridMove{
 
     from{
+
         transform:translateY(0);
+
     }
 
     to{
+
         transform:translateY(40px);
+
     }
 
 }
 
-/* ===========================
+/* =========================
 CONTAINER
-=========================== */
+========================= */
 
 .container{
 
-    width:min(1000px,92%);
+    width:min(1100px,92%);
 
     margin:auto;
 
@@ -79,49 +119,11 @@ CONTAINER
 
 }
 
-/* ===========================
-SECTIONS
-=========================== */
+/* =========================
+SCREEN
+========================= */
 
-section{
-
-    text-align:center;
-
-    animation:fade .5s;
-
-}
-
-.hidden{
-
-    display:none;
-
-}
-
-@keyframes fade{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(20px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
-}
-
-/* ===========================
-HOME
-=========================== */
-
-#home{
+.screen{
 
     min-height:100vh;
 
@@ -131,63 +133,117 @@ HOME
 
     justify-content:center;
 
-    align-items:center;
+}
+
+.hidden{
+
+    display:none !important;
 
 }
 
-#home h1{
+/* =========================
+HOME
+========================= */
+
+.home-box{
+
+    background:#0c1d2a;
+
+    border:1px solid rgba(0,255,255,.18);
+
+    border-radius:18px;
+
+    padding:45px;
+
+    box-shadow:
+
+    0 0 25px rgba(0,255,255,.12);
+
+    text-align:center;
+
+}
+
+.home-box h1{
+
+    color:#00f6ff;
 
     font-size:48px;
 
-    color:#00f7ff;
-
-    line-height:1.4;
+    line-height:1.3;
 
     text-shadow:
 
-    0 0 8px #00f7ff,
-
-    0 0 20px #00f7ff55;
-
-    margin-bottom:25px;
+    0 0 12px rgba(0,255,255,.45);
 
 }
 
-#home p{
+.subtitle{
 
-    max-width:760px;
+    margin-top:18px;
 
-    color:#d5e8f5;
+    color:#d2e8f4;
+
+    font-size:20px;
+
+}
+
+.case-box{
+
+    margin-top:35px;
+
+    padding:28px;
+
+    border-radius:14px;
+
+    background:#122535;
+
+    border-left:5px solid #00e5ff;
+
+    text-align:left;
+
+}
+
+.case-box h2{
+
+    margin-bottom:18px;
+
+    color:#00f6ff;
+
+}
+
+.case-box p{
+
+    margin:12px 0;
 
     line-height:1.8;
 
-    font-size:18px;
-
-    margin-bottom:35px;
-
 }
 
-/* ===========================
+/* =========================
 BUTTON
-=========================== */
+========================= */
 
 button{
 
-    background:#00bcd4;
-
-    color:#04131b;
+    margin-top:35px;
 
     border:none;
 
-    padding:14px 34px;
+    outline:none;
 
-    border-radius:8px;
+    cursor:pointer;
+
+    background:#00cfe8;
+
+    color:#06131d;
 
     font-size:18px;
 
     font-weight:bold;
 
-    cursor:pointer;
+    padding:15px 35px;
+
+    border-radius:10px;
 
     transition:.25s;
 
@@ -195,23 +251,25 @@ button{
 
 button:hover{
 
+    transform:translateY(-3px);
+
     background:#00ffff;
 
-    transform:translateY(-2px);
+    box-shadow:
 
-    box-shadow:0 0 18px #00ffff99;
+    0 0 18px rgba(0,255,255,.5);
 
 }
 
 button:active{
 
-    transform:scale(.97);
+    transform:scale(.98);
 
 }
 
-/* ===========================
+/* =========================
 TOPBAR
-=========================== */
+========================= */
 
 .topbar{
 
@@ -219,203 +277,432 @@ TOPBAR
 
     justify-content:space-between;
 
-    gap:20px;
+    align-items:center;
+
+    gap:15px;
 
     margin-bottom:25px;
 
     flex-wrap:wrap;
 
-    font-size:18px;
-
-    font-weight:bold;
-
 }
 
-.topbar div{
+.top-item{
 
-    background:#102130;
+    background:#102433;
 
-    border:1px solid #00d9ff44;
-
-    border-radius:8px;
+    border:1px solid rgba(0,255,255,.15);
 
     padding:12px 18px;
 
+    border-radius:8px;
+
+    font-weight:bold;
+
+    font-size:18px;
+
+}
+/* =========================
+PROGRESS BAR
+========================= */
+
+.progress{
+
+    width:100%;
+
+    height:12px;
+
+    background:#102433;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    margin-bottom:25px;
+
+    border:1px solid rgba(0,255,255,.15);
+
 }
 
-/* ===========================
-CARD
-=========================== */
+#progressBar{
+
+    width:0%;
+
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        #00d9ff,
+        #00ff99
+    );
+
+    transition:width .4s ease;
+
+}
+
+/* =========================
+QUESTION CARD
+========================= */
 
 .card{
 
-    background:#102130;
+    background:#0c1d2a;
 
-    border:1px solid #00d9ff55;
+    border:1px solid rgba(0,255,255,.18);
 
-    border-radius:14px;
+    border-radius:18px;
 
     padding:35px;
 
     box-shadow:
 
-    0 0 20px #00d9ff18;
+    0 0 20px rgba(0,255,255,.10);
 
 }
 
 .card h2{
 
-    margin-bottom:28px;
+    font-size:28px;
 
-    line-height:1.6;
+    line-height:1.8;
+
+    margin-bottom:30px;
 
     color:#ffffff;
 
 }
 
-/* ===========================
-ANSWERS
-=========================== */
+/* =========================
+ANSWER LIST
+========================= */
 
 #answers{
 
     display:grid;
 
-    gap:15px;
+    gap:18px;
 
 }
+
+/* =========================
+ANSWER BUTTON
+========================= */
 
 .answer{
 
     width:100%;
 
-    background:#173449;
+    text-align:left;
 
-    color:white;
+    padding:18px;
 
-    border:1px solid #1ec8ff55;
+    border-radius:10px;
 
-    border-radius:8px;
+    border:1px solid rgba(0,255,255,.15);
 
-    padding:15px;
+    background:#173142;
 
-    cursor:pointer;
+    color:#ffffff;
+
+    font-size:17px;
 
     transition:.25s;
 
-    text-align:left;
+    cursor:pointer;
 
 }
 
 .answer:hover{
 
-    background:#1d4964;
+    background:#1d465e;
 
     border-color:#00ffff;
 
+    transform:translateY(-2px);
+
 }
+
+.answer:disabled{
+
+    cursor:default;
+
+}
+
+/* =========================
+CORRECT
+========================= */
 
 .answer.correct{
 
-    background:#1d7a39;
+    background:#1b7f45;
 
     border-color:#00ff99;
 
     color:white;
 
+    box-shadow:
+
+    0 0 15px rgba(0,255,153,.30);
+
 }
+
+/* =========================
+WRONG
+========================= */
 
 .answer.wrong{
 
-    background:#8d2323;
+    background:#912929;
 
     border-color:#ff6666;
 
     color:white;
 
+    box-shadow:
+
+    0 0 15px rgba(255,80,80,.25);
+
 }
 
-/* ===========================
+/* =========================
 STATUS
-=========================== */
+========================= */
 
 #status{
 
-    margin-top:25px;
+    margin-top:30px;
 
-    font-size:22px;
+    min-height:40px;
+
+    font-size:24px;
 
     font-weight:bold;
 
-    min-height:35px;
+    text-align:center;
 
 }
 
-/* ===========================
-RESULT
-=========================== */
+/* =========================
+STATUS COLOR
+========================= */
 
-.resultBox{
+.success{
 
-    margin-top:25px;
+    color:#00ff99;
+
+    text-shadow:
+
+    0 0 10px rgba(0,255,153,.5);
+
+}
+
+.fail{
+
+    color:#ff6b6b;
+
+    text-shadow:
+
+    0 0 10px rgba(255,90,90,.5);
+
+}
+
+.trace{
+
+    color:#00e5ff;
+
+    text-shadow:
+
+    0 0 10px rgba(0,229,255,.4);
+
+    animation:traceBlink .8s infinite;
+
+}
+
+@keyframes traceBlink{
+
+    50%{
+
+        opacity:.35;
+
+    }
+
+}
+
+/* =========================
+NEXT BUTTON
+========================= */
+
+#nextBtn{
+
+    margin-top:30px;
+
+    float:right;
+
+}
+
+#nextBtn.hidden{
+
+    display:none;
+
+}
+
+/* =========================
+SMALL EFFECTS
+========================= */
+
+.card,
+.answer,
+button,
+.progress{
+
+    transition:
+
+    background .25s,
+
+    border-color .25s,
+
+    box-shadow .25s,
+
+    transform .25s;
+
+}
+
+/* =========================
+SELECTION
+========================= */
+
+::selection{
+
+    background:#00e5ff;
+
+    color:#06131d;
+
+}
+/* =========================
+RESULT SCREEN
+========================= */
+
+#result{
+
+    text-align:center;
+
+}
+
+#result h1{
+
+    color:#00f5ff;
+
+    margin-bottom:30px;
+
+    font-size:42px;
+
+    text-shadow:
+
+    0 0 12px rgba(0,255,255,.35);
+
+}
+
+.result-card{
+
+    background:#0c1d2a;
+
+    border:1px solid rgba(0,255,255,.18);
+
+    border-radius:18px;
+
+    padding:35px;
 
     text-align:left;
 
-    background:#102130;
+    box-shadow:
 
-    border-radius:12px;
-
-    padding:30px;
-
-    border:1px solid #00ffff55;
-
-    box-shadow:0 0 20px #00d9ff18;
+    0 0 25px rgba(0,255,255,.12);
 
 }
 
-.resultBox p{
+/* =========================
+RESULT TABLE
+========================= */
 
-    margin:14px 0;
+.result-card table{
 
-    font-size:18px;
+    width:100%;
 
-}
-
-.resultBox hr{
-
-    margin:22px 0;
-
-    border:0;
-
-    border-top:1px solid #2b566e;
+    border-collapse:collapse;
 
 }
 
-.resultBox h3{
+.result-card td{
 
-    margin-bottom:18px;
+    padding:14px;
 
-    color:#00ffff;
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    font-size:17px;
 
 }
 
-.resultBox ul{
+.result-card td:first-child{
+
+    width:35%;
+
+    color:#7fdfff;
+
+    font-weight:bold;
+
+}
+
+.result-card td:last-child{
+
+    color:#ffffff;
+
+}
+
+/* =========================
+LINE
+========================= */
+
+.result-card hr{
+
+    border:none;
+
+    height:1px;
+
+    background:rgba(255,255,255,.08);
+
+    margin:30px 0;
+
+}
+
+/* =========================
+SECURITY RECOMMENDATION
+========================= */
+
+.result-card h3{
+
+    color:#00f5ff;
+
+    margin-bottom:20px;
+
+}
+
+.result-card ul{
 
     padding-left:22px;
 
 }
 
-.resultBox li{
+.result-card li{
 
-    margin:10px 0;
+    margin:12px 0;
 
-    line-height:1.7;
+    line-height:1.8;
 
 }
 
-/* ===========================
-TEXT
-=========================== */
+/* =========================
+SPECIAL TEXT
+========================= */
 
 #alias{
 
@@ -441,21 +728,35 @@ TEXT
 
 }
 
-#rank{
+#finalScore{
 
-    color:#ffae42;
+    color:#ffffff;
 
     font-weight:bold;
 
 }
 
-/* ===========================
+#rank{
+
+    color:#ffb74d;
+
+    font-weight:bold;
+
+}
+
+/* =========================
 SCROLLBAR
-=========================== */
+========================= */
 
 ::-webkit-scrollbar{
 
-    width:8px;
+    width:9px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#07131d;
 
 }
 
@@ -463,49 +764,105 @@ SCROLLBAR
 
     background:#00bcd4;
 
-    border-radius:10px;
+    border-radius:20px;
 
 }
 
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-thumb:hover{
 
-    background:#08131d;
+    background:#00e5ff;
 
 }
 
-/* ===========================
-RESPONSIVE
-=========================== */
+/* =========================
+FADE ANIMATION
+========================= */
 
-@media(max-width:768px){
+@keyframes fadeUp{
 
-    #home h1{
+    from{
 
-        font-size:30px;
+        opacity:0;
+
+        transform:translateY(25px);
 
     }
 
-    #home p{
+    to{
 
-        font-size:16px;
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+.screen{
+
+    animation:fadeUp .45s ease;
+
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media (max-width:900px){
+
+    .home-box{
+
+        padding:30px;
+
+    }
+
+    .home-box h1{
+
+        font-size:38px;
 
     }
 
     .card{
 
-        padding:22px;
+        padding:28px;
 
     }
 
-    .card h2{
+}
 
-        font-size:22px;
+@media (max-width:768px){
+
+    .container{
+
+        width:95%;
 
     }
 
     .topbar{
 
         flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .top-item{
+
+        width:100%;
+
+        text-align:center;
+
+    }
+
+    .card{
+
+        padding:24px;
+
+    }
+
+    .card h2{
+
+        font-size:23px;
 
     }
 
@@ -515,109 +872,118 @@ RESPONSIVE
 
     }
 
+    #nextBtn{
+
+        float:none;
+
+    }
+
+    .result-card{
+
+        padding:24px;
+
+    }
+
+    .result-card table,
+
+    .result-card tbody,
+
+    .result-card tr,
+
+    .result-card td{
+
+        display:block;
+
+        width:100%;
+
+    }
+
+    .result-card tr{
+
+        margin-bottom:18px;
+
+    }
+
+    .result-card td{
+
+        border:none;
+
+        padding:6px 0;
+
+    }
+
 }
 
-@media(max-width:480px){
+@media (max-width:480px){
 
-    .container{
+    .home-box h1{
 
-        width:94%;
+        font-size:30px;
 
-    }
-
-    #home h1{
-
-        font-size:26px;
+        line-height:1.4;
 
     }
 
-    #home p{
+    .subtitle{
 
-        font-size:15px;
+        font-size:16px;
 
     }
 
-    .card{
+    .case-box{
 
         padding:18px;
 
     }
 
-    .topbar div{
+    .case-box p{
 
-        width:100%;
+        font-size:15px;
 
-        text-align:center;
+    }
+
+    .card h2{
+
+        font-size:20px;
+
+    }
+
+    .answer{
+
+        font-size:15px;
+
+        padding:15px;
+
+    }
+
+    #status{
+
+        font-size:20px;
+
+    }
+
+    #result h1{
+
+        font-size:30px;
 
     }
 
 }
-/*==============================
-PROGRESS BAR
-==============================*/
 
-.progress{
+/* =========================
+DESKTOP
+========================= */
 
-    width:100%;
+@media (min-width:1200px){
 
-    height:10px;
+    .container{
 
-    background:#152636;
-
-    border-radius:30px;
-
-    margin-bottom:25px;
-
-    overflow:hidden;
-
-}
-
-#progressBar{
-
-    width:0%;
-
-    height:100%;
-
-    background:linear-gradient(90deg,#00d9ff,#00ff99);
-
-    transition:.4s;
-
-}
-
-/*==============================
-STATUS EFFECT
-==============================*/
-
-.success{
-
-    color:#00ff99;
-
-    text-shadow:0 0 8px #00ff99;
-
-}
-
-.fail{
-
-    color:#ff6666;
-
-    text-shadow:0 0 8px #ff6666;
-
-}
-
-.trace{
-
-    color:#00ffff;
-
-    animation:blink .8s infinite;
-
-}
-
-@keyframes blink{
-
-    50%{
-
-        opacity:.4;
+        width:1100px;
 
     }
 
 }
+
+/* =========================
+THE END
+========================= */
