@@ -1,69 +1,291 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hành Trình Truy Vết Tội Phạm Mạng</title>
-    <!-- Nhúng file CSS -->
+
+    <title>Hành trình truy vết tội phạm mạng</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div id="app">
-        <!-- SCREEN 1: BẮT ĐẦU -->
-        <div id="intro-screen" class="screen">
-            <h1>Hệ Thống Truy Vết<span class="cursor">_</span></h1>
-            <div class="intro-text">
-                <p>CẢNH BÁO: Máy chủ trung tâm của tập đoàn X vừa bị xâm nhập. Dữ liệu khách hàng đang bị rò rỉ.</p>
+    <!-- Background -->
+    <div class="bg-grid"></div>
+
+    <!-- ========================= -->
+    <!-- Trang chủ -->
+    <!-- ========================= -->
+
+    <section id="home" class="screen active">
+
+        <div class="hero">
+
+            <div class="badge">
+                CYBER SECURITY
+            </div>
+
+            <h1>
+                HÀNH TRÌNH
                 <br>
-                <p>Nhiệm vụ của bạn: Trở thành Chuyên gia An ninh mạng, phân tích các dấu vết để lại (logs, IP, hành vi) để tìm ra danh tính kẻ tấn công trước khi quá muộn.</p>
-            </div>
-            <button class="btn btn-center" onclick="startGame()">[KHỞI ĐỘNG HỆ THỐNG]</button>
+                TRUY VẾT
+                <br>
+                TỘI PHẠM MẠNG
+            </h1>
+
+            <p>
+                Bạn sẽ trở thành điều tra viên số.
+                <br><br>
+
+                Phân tích dấu vết,
+                lựa chọn đáp án chính xác
+                để truy vết kẻ tấn công.
+
+                <br><br>
+
+                Mỗi quyết định đều ảnh hưởng
+                đến kết quả điều tra.
+            </p>
+
+            <button id="startBtn">
+                BẮT ĐẦU ĐIỀU TRA
+            </button>
+
         </div>
 
-        <!-- SCREEN 2: GAMEPLAY -->
-        <div id="game-screen" class="screen hidden">
-            <div class="level-indicator" id="level-display">Giai đoạn: 1/x</div>
-            
-            <div class="scenario" id="scenario-text">
-                <!-- Nội dung tình huống được inject từ JS -->
-            </div>
-            
-            <div class="log-box" id="clue-box">
-                <!-- Dữ liệu/Log manh mối -->
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- Trang điều tra -->
+    <!-- ========================= -->
+
+    <section id="game" class="screen">
+
+        <div class="container">
+
+            <!-- Header -->
+
+            <div class="topbar">
+
+                <div>
+
+                    <div class="small">
+                        Tiến trình
+                    </div>
+
+                    <div id="progress">
+                        1 / 5
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <div class="small">
+                        Điểm
+                    </div>
+
+                    <div id="score">
+                        0
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="options" id="options-container">
-                <!-- Các nút đáp án sẽ render ở đây -->
+
+            <!-- Thanh tiến trình -->
+
+            <div class="progress-bar">
+
+                <div id="progressFill"></div>
+
             </div>
 
-            <div id="feedback-msg"></div>
+
+            <!-- Tình huống -->
+
+            <div class="card">
+
+                <h2 id="caseTitle">
+                    Tình huống
+                </h2>
+
+                <p id="caseStory">
+
+                </p>
+
+            </div>
+
+
+            <!-- Dấu vết -->
+
+            <div class="card">
+
+                <h3>
+                    DẤU VẾT THU THẬP
+                </h3>
+
+                <pre id="evidence">
+
+                </pre>
+
+            </div>
+
+
+            <!-- Câu hỏi -->
+
+            <div class="card">
+
+                <h3 id="question">
+
+                </h3>
+
+                <div id="answers">
+
+                </div>
+
+            </div>
+
+
+            <!-- Kết quả -->
+
+            <div id="message">
+
+            </div>
+
+
+            <button id="nextBtn">
+
+                XÁC NHẬN
+
+            </button>
+
         </div>
 
-        <!-- SCREEN 3: KẾT QUẢ -->
-        <div id="result-screen" class="screen hidden">
-            <h1>Hồ Sơ Tội Phạm Mạng</h1>
-            
-            <div class="stats-box">
-                <p><strong>Trạng thái:</strong> Bắt giữ thành công!</p>
-                <p><strong>Điểm điều tra:</strong> <span id="final-score"></span>/100</p>
-                <p><strong>Đánh giá năng lực:</strong> <span id="final-eval"></span></p>
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- Trang kết thúc -->
+    <!-- ========================= -->
+
+    <section id="result" class="screen">
+
+        <div class="hero">
+
+            <div class="badge success">
+
+                CASE CLOSED
+
             </div>
 
-            <h3>Khuyến Nghị Phòng Chống</h3>
-            <ul class="tips-list">
-                <li><strong>Xác thực email:</strong> Kiểm tra kỹ Return-Path, áp dụng SPF, DKIM, DMARC.</li>
-                <li><strong>Kiểm soát Endpoint (EDR):</strong> Chặn Microsoft Office tự động chạy Macro, giám sát hành vi spawn shell lạ (cmd, powershell).</li>
-                <li><strong>Lọc đầu vào (Input Validation):</strong> Dùng Parameterized Queries để chống SQL Injection.</li>
-                <li><strong>Kiểm soát đặc quyền (PAM):</strong> Thường xuyên kiểm tra các file có quyền SUID trên hệ thống Linux.</li>
-                <li><strong>Giám sát mạng:</strong> Chặn/cảnh báo các kết nối Outbound bất thường đến IP lạ.</li>
-            </ul>
+            <h1>
 
-            <button class="btn btn-center" onclick="resetGame()">[ĐÓNG HỒ SƠ & BẮT ĐẦU LẠI]</button>
+                ĐÃ TRUY VẾT
+                <br>
+                THÀNH CÔNG
+
+            </h1>
+
+            <div class="result-box">
+
+                <h2>
+
+                    TỘI PHẠM MẠNG
+
+                </h2>
+
+                <p>
+
+                    Bí danh:
+                    <strong>ShadowFox</strong>
+
+                    <br><br>
+
+                    Phương thức:
+
+                    <br>
+
+                    • Phishing
+
+                    <br>
+
+                    • Website giả mạo
+
+                    <br>
+
+                    • Đánh cắp tài khoản
+
+                    <br>
+
+                    • Botnet
+
+                </p>
+
+            </div>
+
+            <div class="result-box">
+
+                <h2>
+
+                    KẾT QUẢ
+
+                </h2>
+
+                <p>
+
+                    Điểm số:
+                    <span id="finalScore"></span>
+
+                </p>
+
+                <p id="rank">
+
+                </p>
+
+            </div>
+
+            <div class="result-box">
+
+                <h2>
+
+                    KHUYẾN NGHỊ
+
+                </h2>
+
+                <ul>
+
+                    <li>Không nhấn vào liên kết lạ.</li>
+
+                    <li>Kiểm tra tên miền trước khi đăng nhập.</li>
+
+                    <li>Bật xác thực hai lớp (2FA).</li>
+
+                    <li>Không chia sẻ mã OTP.</li>
+
+                    <li>Thường xuyên kiểm tra lịch sử đăng nhập.</li>
+
+                </ul>
+
+            </div>
+
+            <button onclick="location.reload()">
+
+                CHƠI LẠI
+
+            </button>
+
         </div>
-    </div>
 
-    <!-- Nhúng file JS (đặt ở cuối body hoặc dùng defer để đảm bảo HTML load xong mới chạy JS) -->
+    </section>
+
+
     <script src="script.js"></script>
+
 </body>
+
 </html>
