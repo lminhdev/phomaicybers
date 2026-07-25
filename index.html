@@ -4,254 +4,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Hành trình truy vết tội phạm mạng</title>
+    <title>Hành Trình Truy Vết Tội Phạm Mạng</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="bg-grid"></div>
+    <!-- Background -->
+    <div class="grid"></div>
 
-    <section id="home" class="screen active">
+    <div class="container">
 
-        <div class="hero">
+        <!-- ================= HOME ================= -->
 
-            <div class="badge">
-                CYBER SECURITY
-            </div>
+        <section id="home">
 
             <h1>
-                HÀNH TRÌNH
-                <br>
-                TRUY VẾT
-                <br>
+                🛡️ HÀNH TRÌNH TRUY VẾT<br>
                 TỘI PHẠM MẠNG
             </h1>
 
             <p>
-                Bạn sẽ trở thành điều tra viên số.
+                Nguyễn Văn A vừa bị lừa chuyển tiền qua mạng.
                 <br><br>
-
-                Phân tích dấu vết,
-                lựa chọn đáp án chính xác
-                để truy vết kẻ tấn công.
-
-                <br><br>
-
-                Mỗi quyết định đều ảnh hưởng
-                đến kết quả điều tra.
+                Bạn là một chuyên gia An ninh mạng.
+                <br>
+                Nhiệm vụ của bạn là phân tích các dấu vết số,
+                hoàn thành từng nhiệm vụ điều tra để truy tìm
+                kẻ lừa đảo.
             </p>
 
             <button id="startBtn">
-                BẮT ĐẦU ĐIỀU TRA
+                BẮT ĐẦU TRUY VẾT
             </button>
 
-        </div>
+        </section>
 
-    </section>
+        <!-- ================= GAME ================= -->
 
-    <section id="game" class="screen">
+        <section id="game" class="hidden">
 
-        <div class="container">
+            <!-- Thanh thông tin -->
 
             <div class="topbar">
 
                 <div>
-
-                    <div class="small">
-                        Tiến trình
-                    </div>
-
-                    <div id="progress">
-                        1 / 5
-                    </div>
-
+                    📋 Task
+                    <span id="currentTask">1</span>
+                    /
+                    <span id="totalTask">10</span>
                 </div>
 
                 <div>
-
-                    <div class="small">
-                        Điểm
-                    </div>
-
-                    <div id="score">
-                        0
-                    </div>
-
+                    ⭐ Điểm:
+                    <span id="score">0</span>
                 </div>
 
             </div>
 
-            <div class="progress-bar">
+            <!-- Thanh tiến trình -->
 
-                <div id="progressFill"></div>
-
+            <div class="progress">
+                <div id="progressBar"></div>
             </div>
+
+            <!-- Card câu hỏi -->
 
             <div class="card">
 
-                <h2 id="caseTitle">
-                    Tình huống
-                </h2>
+                <h2 id="question"></h2>
 
-                <p id="caseStory">
+                <div id="answers"></div>
 
-                </p>
+                <p id="status"></p>
 
-            </div>
-
-            <div class="card">
-
-                <h3>
-                    DẤU VẾT THU THẬP
-                </h3>
-
-                <pre id="evidence">
-
-                </pre>
+                <button id="nextBtn" class="hidden">
+                    Tiếp tục →
+                </button>
 
             </div>
 
-            <div class="card">
+        </section>
 
-                <h3 id="question">
+        <!-- ================= RESULT ================= -->
 
-                </h3>
-
-                <div id="answers">
-
-                </div>
-
-            </div>
-
-            <div id="message">
-
-            </div>
-
-
-            <button id="nextBtn">
-
-                XÁC NHẬN
-
-            </button>
-
-        </div>
-
-    </section>
-
-    <section id="result" class="screen">
-
-        <div class="hero">
-
-            <div class="badge success">
-
-                CASE CLOSED
-
-            </div>
+        <section id="result" class="hidden">
 
             <h1>
-
-                ĐÃ TRUY VẾT
-                <br>
-                THÀNH CÔNG
-
+                🎯 KẾT QUẢ TRUY VẾT
             </h1>
 
-            <div class="result-box">
-
-                <h2>
-
-                    TỘI PHẠM MẠNG
-
-                </h2>
+            <div class="resultBox">
 
                 <p>
-
-                    Bí danh:
-                    <strong>phomaiconmelcuoi</strong>
-
-                    <br><br>
-
-                    Phương thức:
-
-                    <br>
-
-                    • Phishing
-
-                    <br>
-
-                    • Website giả mạo
-
-                    <br>
-
-                    • Đánh cắp tài khoản
-
-                    <br>
-
-                    • Botnet
-
+                    <strong>👤 Biệt danh:</strong>
+                    <span id="alias"></span>
                 </p>
 
-            </div>
-
-            <div class="result-box">
-
-                <h2>
-
-                    KẾT QUẢ
-
-                </h2>
+                <p>
+                    <strong>🌐 Địa chỉ IP:</strong>
+                    <span id="ip"></span>
+                </p>
 
                 <p>
+                    <strong>📍 Quốc gia:</strong>
+                    <span id="country"></span>
+                </p>
 
-                    Điểm số:
+                <p>
+                    <strong>🏆 Điểm:</strong>
                     <span id="finalScore"></span>
-
                 </p>
 
-                <p id="rank">
-
+                <p>
+                    <strong>📊 Đánh giá:</strong>
+                    <span id="rank"></span>
                 </p>
 
-            </div>
+                <hr>
 
-            <div class="result-box">
-
-                <h2>
-
-                    KHUYẾN NGHỊ
-
-                </h2>
+                <h3>Khuyến nghị bảo mật</h3>
 
                 <ul>
 
-                    <li>Không nhấn vào liên kết lạ.</li>
+                    <li>Không chuyển tiền khi chưa xác minh danh tính.</li>
 
-                    <li>Kiểm tra tên miền trước khi đăng nhập.</li>
+                    <li>Luôn bật xác thực hai lớp (2FA).</li>
 
-                    <li>Bật xác thực hai lớp (2FA).</li>
+                    <li>Không bấm vào liên kết hoặc mã QR lạ.</li>
 
-                    <li>Không chia sẻ mã OTP.</li>
+                    <li>Kiểm tra kỹ tên miền trước khi đăng nhập.</li>
 
-                    <li>Thường xuyên kiểm tra lịch sử đăng nhập.</li>
+                    <li>Không chia sẻ mã OTP cho bất kỳ ai.</li>
+
+                    <li>Lưu lại bằng chứng và báo cơ quan chức năng khi bị lừa đảo.</li>
 
                 </ul>
 
             </div>
 
             <button onclick="location.reload()">
-
-                CHƠI LẠI
-
+                🔄 Chơi lại
             </button>
 
-        </div>
+        </section>
 
-    </section>
+    </div>
 
-
+    <script src="data.js"></script>
     <script src="script.js"></script>
 
 </body>
