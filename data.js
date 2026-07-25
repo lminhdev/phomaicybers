@@ -1,133 +1,259 @@
+// ======================================
+// HÀNH TRÌNH TRUY VẾT TỘI PHẠM MẠNG
+// data.js
+// ======================================
+
 const tasks = [
 
 {
-    question: "Task 1\n\nNguyễn Văn A nhận được email yêu cầu xác minh tài khoản ngân hàng. Địa chỉ gửi là:\n\nsupport@vietcombank-security.xyz\n\nDấu hiệu đáng nghi nhất là gì?",
+    id:1,
 
-    options: [
-        "Email có chữ 'support'",
-        "Tên miền .xyz thay vì tên miền chính thức của ngân hàng",
+    title:"Task 1 - Email giả mạo",
+
+    question:"Nguyễn Văn A nhận được email yêu cầu xác minh tài khoản ngân hàng với địa chỉ:\n\nsupport@vietcombank-security.xyz\n\nDấu hiệu nào đáng nghi nhất?",
+
+    options:[
+
         "Email được gửi vào buổi tối",
-        "Có logo ngân hàng"
+
+        "Tên miền .xyz thay vì tên miền chính thức của ngân hàng",
+
+        "Email có logo ngân hàng",
+
+        "Email có chữ 'support'"
+
     ],
 
-    answer: 1
+    answer:1,
+
+    explain:"Tên miền không thuộc ngân hàng chính thức là dấu hiệu phổ biến của email lừa đảo (phishing)."
+
 },
 
 {
-    question: "Task 2\n\nMột website đăng nhập có địa chỉ:\n\nhttps://facebook-login-security.com\n\nĐây là dạng tấn công gì?",
+    id:2,
 
-    options: [
-        "SQL Injection",
-        "Phishing",
+    title:"Task 2 - Website giả mạo",
+
+    question:"Bạn truy cập vào website:\n\nhttps://facebook-login-security.com\n\nĐây là dấu hiệu của hình thức tấn công nào?",
+
+    options:[
+
+        "Brute Force",
+
         "DDoS",
-        "Brute Force"
+
+        "Phishing",
+
+        "SQL Injection"
+
     ],
 
-    answer: 1
+    answer:2,
+
+    explain:"Website sử dụng tên miền gần giống Facebook để đánh cắp tài khoản."
+
 },
 
 {
-    question: "Task 3\n\nNhật ký đăng nhập ghi nhận:\n\n03:14 AM\n\nIP: 185.201.12.88\n\nĐiều gì cần kiểm tra đầu tiên?",
+    id:3,
 
-    options: [
-        "Quốc gia của địa chỉ IP",
-        "Dung lượng RAM máy tính",
-        "Phiên bản Windows",
-        "Tên WiFi"
+    title:"Task 3 - Phân tích IP",
+
+    question:"Trong nhật ký hệ thống xuất hiện IP:\n\n185.201.12.88\n\nBước điều tra đầu tiên hợp lý nhất là gì?",
+
+    options:[
+
+        "Kiểm tra vị trí và thông tin của địa chỉ IP",
+
+        "Cài lại Windows",
+
+        "Đổi mật khẩu WiFi",
+
+        "Khởi động lại modem"
+
     ],
 
-    answer: 0
+    answer:0,
+
+    explain:"Phân tích IP giúp xác định máy chủ, nhà mạng hoặc khu vực xuất phát."
+
 },
 
 {
-    question: "Task 4\n\nKẻ lừa đảo gửi đường link rút gọn:\n\nbit.ly/abcxyz\n\nViệc nên làm trước khi mở là gì?",
+    id:4,
 
-    options: [
-        "Mở ngay bằng điện thoại",
-        "Kiểm tra URL thật bằng công cụ mở rộng liên kết",
-        "Đổi trình duyệt",
-        "Tăng độ sáng màn hình"
+    title:"Task 4 - Link rút gọn",
+
+    question:"Đối tượng gửi đường dẫn:\n\nhttps://bit.ly/3abcXYZ\n\nViệc nên làm trước khi truy cập là gì?",
+
+    options:[
+
+        "Mở trực tiếp",
+
+        "Kiểm tra URL đích bằng công cụ mở rộng liên kết",
+
+        "Đổi sang trình duyệt khác",
+
+        "Tắt phần mềm diệt virus"
+
     ],
 
-    answer: 1
+    answer:1,
+
+    explain:"Link rút gọn có thể che giấu website độc hại."
+
 },
 
 {
-    question: "Task 5\n\nSau khi nhấp vào liên kết giả mạo, trình duyệt yêu cầu tải file:\n\nInvoice.pdf.exe\n\nĐiều gì đáng nghi nhất?",
+    id:5,
 
-    options: [
-        "File quá nhỏ",
-        "Có hai phần mở rộng (.pdf.exe)",
-        "Tên file viết tiếng Anh",
-        "Có chữ Invoice"
+    title:"Task 5 - Tập tin đáng ngờ",
+
+    question:"Sau khi mở email, trình duyệt yêu cầu tải tệp:\n\nHoaDon.pdf.exe\n\nĐiểm đáng nghi nhất là gì?",
+
+    options:[
+
+        "Tên tệp viết bằng tiếng Việt",
+
+        "Tệp có hai phần mở rộng (.pdf.exe)",
+
+        "Dung lượng nhỏ",
+
+        "Tên tệp quá ngắn"
+
     ],
 
-    answer: 1
-},
+    answer:1,
 
+    explain:"Tệp .exe được ngụy trang thành tài liệu PDF để lừa người dùng chạy mã độc."
+
+}
+
+],
 {
-    question: "Task 6\n\nMột mật khẩu mạnh nhất là:",
+    id:6,
 
-    options: [
+    title:"Task 6 - Mật khẩu",
+
+    question:"Mật khẩu nào dưới đây có độ mạnh cao nhất?",
+
+    options:[
+
         "12345678",
+
         "nguyenvana",
+
         "P@5sW0rd!9xQ",
-        "abcdefghi"
+
+        "abcdef123"
+
     ],
 
-    answer: 2
+    answer:2,
+
+    explain:"Mật khẩu mạnh nên có chữ hoa, chữ thường, số, ký tự đặc biệt và đủ dài."
+
 },
 
 {
-    question: "Task 7\n\nSau khi bị lừa chuyển tiền, việc nào nên thực hiện NGAY?",
+    id:7,
 
-    options: [
-        "Đổi hình nền điện thoại",
-        "Liên hệ ngân hàng và trình báo cơ quan chức năng",
-        "Xóa ứng dụng ngân hàng",
-        "Khởi động lại máy"
+    title:"Task 7 - 2FA",
+
+    question:"Biện pháp nào giúp giảm nguy cơ bị chiếm tài khoản ngay cả khi lộ mật khẩu?",
+
+    options:[
+
+        "Đổi tên WiFi",
+
+        "Bật xác thực hai lớp (2FA)",
+
+        "Xóa lịch sử trình duyệt",
+
+        "Giảm độ sáng màn hình"
+
     ],
 
-    answer: 1
+    answer:1,
+
+    explain:"Xác thực hai lớp yêu cầu thêm một bước xác minh ngoài mật khẩu."
+
 },
 
 {
-    question: "Task 8\n\nMột địa chỉ IP được xác định xuất phát từ máy chủ đặt tại Campuchia.\n\nĐiều này khẳng định điều gì?",
+    id:8,
 
-    options: [
-        "Kẻ lừa đảo chắc chắn là người Campuchia",
-        "Máy chủ đang đặt tại Campuchia, chưa đủ kết luận về danh tính",
-        "IP luôn xác định chính xác vị trí của người dùng",
-        "Máy tính của nạn nhân bị hỏng"
+    title:"Task 8 - Địa chỉ IP",
+
+    question:"Kết quả phân tích cho thấy IP truy cập thuộc máy chủ đặt tại Campuchia. Điều này cho phép kết luận điều gì?",
+
+    options:[
+
+        "Kẻ tấn công chắc chắn là người Campuchia",
+
+        "Máy chủ trung gian đặt tại Campuchia, chưa đủ để xác định danh tính",
+
+        "Máy tính nạn nhân đã bị hỏng",
+
+        "Người dùng đang sử dụng điện thoại Android"
+
     ],
 
-    answer: 1
+    answer:1,
+
+    explain:"Địa chỉ IP chỉ phản ánh điểm kết nối hoặc máy chủ, không khẳng định quốc tịch hay danh tính."
+
 },
 
 {
-    question: "Task 9\n\nTội phạm sử dụng VPN trước khi thực hiện hành vi lừa đảo.\n\nVPN làm cho việc truy vết khó hơn vì:",
+    id:9,
 
-    options: [
+    title:"Task 9 - VPN",
+
+    question:"Đối tượng sử dụng VPN trước khi thực hiện hành vi lừa đảo. VPN gây khó khăn cho việc truy vết vì:",
+
+    options:[
+
         "Làm tăng tốc độ Internet",
+
         "Ẩn hoặc thay đổi địa chỉ IP thật",
+
         "Tăng dung lượng ổ cứng",
-        "Mã hóa bàn phím"
+
+        "Tự động xóa virus"
+
     ],
 
-    answer: 1
+    answer:1,
+
+    explain:"VPN che giấu IP thật bằng cách chuyển lưu lượng qua máy chủ trung gian."
+
 },
 
 {
-    question: "Task 10\n\nSau khi hoàn thành phân tích log, email và địa chỉ IP, bước tiếp theo phù hợp nhất là:",
+    id:10,
 
-    options: [
-        "Tự công khai thông tin nghi phạm lên mạng",
-        "Lưu toàn bộ bằng chứng và chuyển cho cơ quan chức năng xử lý",
-        "Xóa tất cả dữ liệu",
-        "Đăng lên mạng xã hội để cảnh báo bằng cách công khai thông tin cá nhân nghi phạm"
+    title:"Task 10 - Kết thúc điều tra",
+
+    question:"Sau khi thu thập email, nhật ký truy cập, IP và các bằng chứng số, bước xử lý phù hợp nhất là gì?",
+
+    options:[
+
+        "Công khai toàn bộ thông tin nghi phạm lên mạng xã hội",
+
+        "Lưu giữ bằng chứng và chuyển cho cơ quan có thẩm quyền",
+
+        "Xóa toàn bộ dữ liệu",
+
+        "Gửi email đe dọa đối tượng"
+
     ],
 
-    answer: 1
+    answer:1,
+
+    explain:"Bằng chứng cần được bảo quản và chuyển cho cơ quan chức năng để xử lý theo quy định."
+
 }
 
 ];
