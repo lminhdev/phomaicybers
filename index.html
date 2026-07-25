@@ -11,52 +11,67 @@
 
 <body>
 
-    <!-- Background -->
-    <div class="grid"></div>
+    <!-- Hiệu ứng nền -->
+    <div class="grid-bg"></div>
 
     <div class="container">
 
-        <!-- ================= HOME ================= -->
+        <!-- =======================
+             TRANG CHỦ
+        ======================== -->
 
-        <section id="home">
+        <section id="home" class="screen">
 
-            <h1>
-                🛡️ HÀNH TRÌNH TRUY VẾT<br>
-                TỘI PHẠM MẠNG
-            </h1>
+            <div class="home-box">
 
-            <p>
-                Nguyễn Văn A vừa bị lừa chuyển tiền qua mạng.
-                <br><br>
-                Bạn là một chuyên gia An ninh mạng.
-                <br>
-                Nhiệm vụ của bạn là phân tích các dấu vết số,
-                hoàn thành từng nhiệm vụ điều tra để truy tìm
-                kẻ lừa đảo.
-            </p>
+                <h1>
+                    🛡️ HÀNH TRÌNH<br>
+                    TRUY VẾT TỘI PHẠM MẠNG
+                </h1>
 
-            <button id="startBtn">
-                BẮT ĐẦU TRUY VẾT
-            </button>
+                <p class="subtitle">
+                    Bạn là chuyên gia An ninh mạng.
+                </p>
+
+                <div class="case-box">
+
+                    <h2>📁 Hồ sơ vụ án</h2>
+
+                    <p><strong>Nạn nhân:</strong> Nguyễn Văn A</p>
+
+                    <p><strong>Sự việc:</strong> Bị lừa chuyển tiền qua Internet.</p>
+
+                    <p><strong>Mục tiêu:</strong> Phân tích dấu vết số để truy tìm đối tượng.</p>
+
+                    <p><strong>Lưu ý:</strong> Đây là hệ thống mô phỏng phục vụ học tập.</p>
+
+                </div>
+
+                <button id="startBtn">
+                    🚀 BẮT ĐẦU ĐIỀU TRA
+                </button>
+
+            </div>
 
         </section>
 
-        <!-- ================= GAME ================= -->
+        <!-- =======================
+             MÀN HÌNH GAME
+        ======================== -->
 
-        <section id="game" class="hidden">
+        <section id="game" class="screen hidden">
 
             <!-- Thanh thông tin -->
 
             <div class="topbar">
 
-                <div>
+                <div class="top-item">
                     📋 Task
-                    <span id="currentTask">1</span>
-                    /
+                    <span id="currentTask">1</span> /
                     <span id="totalTask">10</span>
                 </div>
 
-                <div>
+                <div class="top-item">
                     ⭐ Điểm:
                     <span id="score">0</span>
                 </div>
@@ -66,10 +81,12 @@
             <!-- Thanh tiến trình -->
 
             <div class="progress">
+
                 <div id="progressBar"></div>
+
             </div>
 
-            <!-- Card câu hỏi -->
+            <!-- Thẻ câu hỏi -->
 
             <div class="card">
 
@@ -87,40 +104,44 @@
 
         </section>
 
-        <!-- ================= RESULT ================= -->
+        <!-- =======================
+             KẾT QUẢ
+        ======================== -->
 
-        <section id="result" class="hidden">
+        <section id="result" class="screen hidden">
 
-            <h1>
-                🎯 KẾT QUẢ TRUY VẾT
-            </h1>
+            <h1>🎯 KẾT QUẢ TRUY VẾT</h1>
 
-            <div class="resultBox">
+            <div class="result-card">
 
-                <p>
-                    <strong>👤 Biệt danh:</strong>
-                    <span id="alias"></span>
-                </p>
+                <table>
 
-                <p>
-                    <strong>🌐 Địa chỉ IP:</strong>
-                    <span id="ip"></span>
-                </p>
+                    <tr>
+                        <td>👤 Biệt danh</td>
+                        <td id="alias"></td>
+                    </tr>
 
-                <p>
-                    <strong>📍 Quốc gia:</strong>
-                    <span id="country"></span>
-                </p>
+                    <tr>
+                        <td>🌐 Địa chỉ IP</td>
+                        <td id="ip"></td>
+                    </tr>
 
-                <p>
-                    <strong>🏆 Điểm:</strong>
-                    <span id="finalScore"></span>
-                </p>
+                    <tr>
+                        <td>📍 Máy chủ</td>
+                        <td id="country"></td>
+                    </tr>
 
-                <p>
-                    <strong>📊 Đánh giá:</strong>
-                    <span id="rank"></span>
-                </p>
+                    <tr>
+                        <td>⭐ Điểm</td>
+                        <td id="finalScore"></td>
+                    </tr>
+
+                    <tr>
+                        <td>🏆 Đánh giá</td>
+                        <td id="rank"></td>
+                    </tr>
+
+                </table>
 
                 <hr>
 
@@ -128,29 +149,31 @@
 
                 <ul>
 
-                    <li>Không chuyển tiền khi chưa xác minh danh tính.</li>
+                    <li>Không chuyển tiền nếu chưa xác minh người nhận.</li>
 
-                    <li>Luôn bật xác thực hai lớp (2FA).</li>
+                    <li>Không chia sẻ mã OTP.</li>
 
-                    <li>Không bấm vào liên kết hoặc mã QR lạ.</li>
+                    <li>Bật xác thực hai lớp (2FA).</li>
 
-                    <li>Kiểm tra kỹ tên miền trước khi đăng nhập.</li>
+                    <li>Kiểm tra tên miền trước khi đăng nhập.</li>
 
-                    <li>Không chia sẻ mã OTP cho bất kỳ ai.</li>
+                    <li>Không tải tệp từ nguồn không tin cậy.</li>
 
-                    <li>Lưu lại bằng chứng và báo cơ quan chức năng khi bị lừa đảo.</li>
+                    <li>Báo ngân hàng và cơ quan chức năng ngay khi phát hiện bị lừa.</li>
 
                 </ul>
 
             </div>
 
             <button onclick="location.reload()">
-                🔄 Chơi lại
+                🔄 Điều tra lại
             </button>
 
         </section>
 
     </div>
+
+    <!-- JavaScript -->
 
     <script src="data.js"></script>
     <script src="script.js"></script>
