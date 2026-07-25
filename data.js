@@ -128,9 +128,9 @@ const tasks = [
 
     explain:"Tệp .exe được ngụy trang thành tài liệu PDF để lừa người dùng chạy mã độc."
 
-}
+},
 
-],
+
 {
     id:6,
 
