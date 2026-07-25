@@ -1,12 +1,3 @@
-// =======================================
-// HÀNH TRÌNH TRUY VẾT TỘI PHẠM MẠNG
-// script.js
-// =======================================
-
-// =============================
-// LẤY CÁC THÀNH PHẦN HTML
-// =============================
-
 const home = document.getElementById("home");
 const game = document.getElementById("game");
 const result = document.getElementById("result");
@@ -30,18 +21,10 @@ const message = document.getElementById("message");
 const finalScore = document.getElementById("finalScore");
 const rank = document.getElementById("rank");
 
-// =============================
-// BIẾN ĐIỀU KHIỂN
-// =============================
-
 let current = 0;
 let score = 0;
 let selected = null;
 let answered = false;
-
-// =============================
-// DỮ LIỆU TÌNH HUỐNG
-// =============================
 
 const cases = [
 
@@ -86,8 +69,6 @@ correct:1
 
 },
 
-// =======================================
-
 {
 
 title:"Tình huống 2 - Nhật ký đăng nhập",
@@ -131,8 +112,6 @@ correct:2
 
 },
 
-// =======================================
-
 {
 
 title:"Tình huống 3 - Kết thúc truy vết",
@@ -173,9 +152,6 @@ correct:2
 }
 
 ];
-// =============================
-// BẮT ĐẦU TRÒ CHƠI
-// =============================
 
 startBtn.addEventListener("click", () => {
 
@@ -185,10 +161,6 @@ startBtn.addEventListener("click", () => {
     loadCase();
 
 });
-
-// =============================
-// HIỂN THỊ TÌNH HUỐNG
-// =============================
 
 function loadCase() {
 
@@ -249,10 +221,6 @@ function loadCase() {
 
 }
 
-// =============================
-// NÚT XÁC NHẬN
-// =============================
-
 nextBtn.addEventListener("click", () => {
 
     if (!answered) {
@@ -276,10 +244,6 @@ nextBtn.addEventListener("click", () => {
     }
 
 });
-
-// =============================
-// KIỂM TRA ĐÁP ÁN
-// =============================
 
 function checkAnswer() {
 
@@ -322,9 +286,6 @@ function checkAnswer() {
         : "TÌNH HUỐNG TIẾP";
 
 }
-// =============================
-// KẾT THÚC TRÒ CHƠI
-// =============================
 
 function finishGame() {
 
@@ -362,10 +323,6 @@ function finishGame() {
     rank.style.color = color;
 
 }
-
-// =============================
-// KHỞI TẠO
-// =============================
 
 progressFill.style.width = "0%";
 scoreText.innerText = "0";
