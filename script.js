@@ -1,264 +1,430 @@
-//===========================
-// HÀNH TRÌNH TRUY VẾT
-//===========================
+// =========================================
+// HÀNH TRÌNH TRUY VẾT TỘI PHẠM MẠNG
+// script.js
+// Phiên bản 2.0
+// =========================================
 
-const home=document.getElementById("home");
-const game=document.getElementById("game");
-const result=document.getElementById("result");
+// ================================
+// DOM
+// ================================
 
-const startBtn=document.getElementById("startBtn");
+const home = document.getElementById("home");
+const game = document.getElementById("game");
+const result = document.getElementById("result");
 
-const question=document.getElementById("question");
-const answers=document.getElementById("answers");
+const startBtn = document.getElementById("startBtn");
+const nextBtn = document.getElementById("nextBtn");
 
-const statusText=document.getElementById("status");
-const nextBtn=document.getElementById("nextBtn");
+const question = document.getElementById("question");
+const answers = document.getElementById("answers");
 
-const currentTask=document.getElementById("currentTask");
-const totalTask=document.getElementById("totalTask");
+const statusText = document.getElementById("status");
 
-const scoreText=document.getElementById("score");
+const currentTask = document.getElementById("currentTask");
+const totalTask = document.getElementById("totalTask");
 
-const progress=document.getElementById("progressBar");
+const scoreText = document.getElementById("score");
 
-const alias=document.getElementById("alias");
-const ip=document.getElementById("ip");
-const country=document.getElementById("country");
+const progressBar = document.getElementById("progressBar");
 
-const finalScore=document.getElementById("finalScore");
-const rank=document.getElementById("rank");
+// RESULT
 
-let index=0;
-let score=0;
+const alias = document.getElementById("alias");
+const ip = document.getElementById("ip");
+const country = document.getElementById("country");
+const finalScore = document.getElementById("finalScore");
+const rank = document.getElementById("rank");
 
-totalTask.innerText=tasks.length;
+// ================================
+// BIẾN HỆ THỐNG
+// ================================
 
-//===========================
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+
+// ================================
 // DỮ LIỆU MÔ PHỎNG
-//===========================
+// ================================
 
-const aliases=[
+const aliases = [
 
-"ShadowFox",
-
-"DarkWolf",
-
-"GhostByte",
-
-"NightSpider",
-
-"ZeroTrace",
-
-"BlackRoot",
-
-"SilentMask",
-
-"CyberGhost"
+    "ShadowFox",
+    "GhostByte",
+    "NightSpider",
+    "DarkRoot",
+    "ZeroTrace",
+    "CyberWolf",
+    "SilentMask",
+    "BlackFalcon"
 
 ];
 
-const ips=[
+const ips = [
 
-"185.201.12.88",
-
-"103.74.21.54",
-
-"91.201.44.12",
-
-"178.12.44.199",
-
-"194.11.56.90",
-
-"103.221.88.15"
+    "185.201.12.88",
+    "103.74.21.54",
+    "91.202.44.71",
+    "194.61.100.25",
+    "178.120.55.81",
+    "45.88.201.9",
+    "103.221.88.15"
 
 ];
 
-const countries=[
+const countries = [
 
-"Campuchia",
-
-"Việt Nam (VPN)",
-
-"Singapore",
-
-"Hong Kong",
-
-"Malaysia",
-
-"Thái Lan"
+    "Campuchia",
+    "Singapore",
+    "Malaysia",
+    "Hong Kong",
+    "Thái Lan",
+    "Việt Nam (VPN)",
+    "Không xác định"
 
 ];
 
-//===========================
-
-startBtn.onclick=()=>{
-
-home.classList.add("hidden");
-
-game.classList.remove("hidden");
-
-loadTask();
-
-};
-
-//===========================
-
-function loadTask(){
-
-statusText.innerHTML="";
-
-statusText.className="";
-
-nextBtn.classList.add("hidden");
-
-currentTask.innerText=index+1;
-
-progress.style.width=((index)/tasks.length)*100+"%";
-
-const task=tasks[index];
-
-question.innerHTML=task.question.replace(/\n/g,"<br>");
-
-answers.innerHTML="";
-
-task.options.forEach((option,i)=>{
-
-const btn=document.createElement("button");
-
-btn.className="answer";
-
-btn.innerHTML=option;
-
-btn.onclick=()=>check(btn,i);
-
-answers.appendChild(btn);
-
-});
-
-}
-
-//===========================
-
-function check(button,choose){
-
-const task=tasks[index];
-
-const all=document.querySelectorAll(".answer");
-
-all.forEach(btn=>btn.disabled=true);
-
-statusText.className="trace";
-
-statusText.innerHTML="🔍 Đang truy vết...";
-
-setTimeout(()=>{
-
-if(choose===task.answer){
-
-button.classList.add("correct");
-
-score++;
-
-scoreText.innerText=score;
-
-statusText.className="success";
-
-statusText.innerHTML="✅ Truy vết thành công";
-
-}else{
-
-button.classList.add("wrong");
-
-all[task.answer].classList.add("correct");
-
-statusText.className="fail";
-
-statusText.innerHTML="❌ Truy vết thất bại";
-
-}
-
-nextBtn.classList.remove("hidden");
-
-},800);
-
-}
-
-//===========================
-
-nextBtn.onclick=()=>{
-
-index++;
-
-if(index>=tasks.length){
-
-showResult();
-
-}else{
-
-loadTask();
-
-}
-
-};
-
-//===========================
+// ================================
+// HÀM LẤY NGẪU NHIÊN
+// ================================
 
 function randomItem(array){
 
-return array[Math.floor(Math.random()*array.length)];
+    return array[Math.floor(Math.random()*array.length)];
 
 }
 
-//===========================
+// ================================
+// CẬP NHẬT THANH TIẾN TRÌNH
+// ================================
+
+function updateProgress(){
+
+    const percent =
+        (currentIndex / tasks.length) * 100;
+
+    progressBar.style.width = percent + "%";
+
+}
+
+// ================================
+// KHỞI TẠO
+// ================================
+
+function initialize(){
+
+    totalTask.textContent = tasks.length;
+
+    currentTask.textContent = 1;
+
+    scoreText.textContent = 0;
+
+    progressBar.style.width = "0%";
+
+}
+
+// ================================
+// BẮT ĐẦU TRÒ CHƠI
+// ================================
+
+startBtn.addEventListener("click",()=>{
+
+    home.classList.add("hidden");
+
+    game.classList.remove("hidden");
+
+    initialize();
+
+    loadTask();
+
+});
+// ================================
+// HIỂN THỊ TASK
+// ================================
+
+function loadTask(){
+
+    answered = false;
+
+    nextBtn.classList.add("hidden");
+
+    statusText.className = "";
+    statusText.textContent = "";
+
+    updateProgress();
+
+    const task = tasks[currentIndex];
+
+    currentTask.textContent = currentIndex + 1;
+
+    question.innerHTML =
+        "<small>" + task.title + "</small><br><br>" +
+        task.question.replace(/\n/g,"<br>");
+
+    answers.innerHTML = "";
+
+    task.options.forEach((option,index)=>{
+
+        const button = document.createElement("button");
+
+        button.className = "answer";
+
+        button.innerHTML = option;
+
+        button.addEventListener("click",()=>{
+
+            checkAnswer(index);
+
+        });
+
+        answers.appendChild(button);
+
+    });
+
+}
+
+// ================================
+// VÔ HIỆU HÓA ĐÁP ÁN
+// ================================
+
+function disableAnswers(){
+
+    document
+        .querySelectorAll(".answer")
+        .forEach(button=>{
+
+            button.disabled = true;
+
+        });
+
+}
+
+// ================================
+// ĐÁNH DẤU ĐÁP ÁN ĐÚNG
+// ================================
+
+function highlightCorrectAnswer(){
+
+    const buttons =
+        document.querySelectorAll(".answer");
+
+    buttons.forEach((button,index)=>{
+
+        if(index===tasks[currentIndex].answer){
+
+            button.classList.add("correct");
+
+        }
+
+    });
+
+}
+
+// ================================
+// ĐÁNH DẤU ĐÁP ÁN NGƯỜI CHƠI
+// ================================
+
+function highlightSelectedAnswer(index){
+
+    const buttons =
+        document.querySelectorAll(".answer");
+
+    if(index===tasks[currentIndex].answer){
+
+        buttons[index].classList.add("correct");
+
+    }else{
+
+        buttons[index].classList.add("wrong");
+
+    }
+
+}
+
+// ================================
+// KIỂM TRA ĐÁP ÁN
+// ================================
+
+function checkAnswer(selectedIndex){
+
+    if(answered) return;
+
+    answered = true;
+
+    disableAnswers();
+
+    highlightSelectedAnswer(selectedIndex);
+
+    highlightCorrectAnswer();
+
+    statusText.className = "trace";
+
+    statusText.textContent =
+        "🔍 Đang phân tích dấu vết...";
+
+    setTimeout(()=>{
+
+        showAnswerResult(selectedIndex);
+
+    },1000);
+
+}
+// ================================
+// HIỂN THỊ KẾT QUẢ TASK
+// ================================
+
+function showAnswerResult(selectedIndex){
+
+    const task = tasks[currentIndex];
+
+    // Trả lời đúng
+    if(selectedIndex === task.answer){
+
+        score++;
+
+        scoreText.textContent = score;
+
+        statusText.className = "success";
+
+        statusText.innerHTML = `
+            ✅ Truy vết thành công
+            <br><br>
+            <small>${task.explain}</small>
+        `;
+
+    }
+
+    // Trả lời sai
+    else{
+
+        statusText.className = "fail";
+
+        statusText.innerHTML = `
+            ❌ Truy vết thất bại
+            <br><br>
+            <small>${task.explain}</small>
+        `;
+
+    }
+
+    nextBtn.classList.remove("hidden");
+
+}
+
+// ================================
+// NÚT TIẾP TỤC
+// ================================
+
+nextBtn.addEventListener("click",()=>{
+
+    currentIndex++;
+
+    // Hết nhiệm vụ
+    if(currentIndex >= tasks.length){
+
+        showResult();
+
+        return;
+
+    }
+
+    loadTask();
+
+});
+// ================================
+// HIỂN THỊ KẾT QUẢ CUỐI
+// ================================
 
 function showResult(){
 
-game.classList.add("hidden");
+    game.classList.add("hidden");
 
-result.classList.remove("hidden");
+    result.classList.remove("hidden");
 
-progress.style.width="100%";
+    // Hoàn thành thanh tiến trình
 
-alias.innerText=randomItem(aliases);
+    progressBar.style.width = "100%";
 
-ip.innerText=randomItem(ips);
+    // Dữ liệu mô phỏng
 
-country.innerText=randomItem(countries);
+    alias.textContent = randomItem(aliases);
 
-finalScore.innerText=score+" / "+tasks.length;
+    ip.textContent = randomItem(ips);
 
-let text="";
+    country.textContent = randomItem(countries);
 
-if(score==tasks.length){
+    // Điểm
 
-text="★★★★★ Chuyên gia truy vết";
+    finalScore.textContent =
+        score + " / " + tasks.length;
+
+    // Xếp hạng
+
+    let text = "";
+
+    if(score === tasks.length){
+
+        text =
+        "🏆 Chuyên gia An ninh mạng";
+
+    }
+
+    else if(score >= 8){
+
+        text =
+        "🥇 Điều tra viên cao cấp";
+
+    }
+
+    else if(score >= 6){
+
+        text =
+        "🥈 Điều tra viên";
+
+    }
+
+    else if(score >= 4){
+
+        text =
+        "🥉 Thực tập sinh SOC";
+
+    }
+
+    else{
+
+        text =
+        "📖 Cần luyện tập thêm";
+
+    }
+
+    rank.textContent = text;
 
 }
 
-else if(score>=8){
+// ================================
+// RESET GAME
+// ================================
 
-text="★★★★☆ Điều tra viên cao cấp";
+function resetGame(){
 
-}
+    currentIndex = 0;
 
-else if(score>=6){
+    score = 0;
 
-text="★★★☆☆ Có kiến thức khá";
+    answered = false;
 
-}
+    scoreText.textContent = "0";
 
-else if(score>=4){
-
-text="★★☆☆☆ Cần luyện thêm";
-
-}
-
-else{
-
-text="★☆☆☆☆ Người mới";
+    progressBar.style.width = "0%";
 
 }
 
-rank.innerText=text;
+// ================================
+// KHỞI ĐỘNG
+// ================================
 
-}
+initialize();
+
+console.log(
+    "Cyber Trace System v2.0 loaded."
+);
