@@ -2,160 +2,417 @@
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hành Trình Truy Vết Tội Phạm Mạng</title>
 
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Cyber Trace Simulator v1.4</title>
+
+    <meta name="description"
+          content="Mô phỏng hành trình truy vết tội phạm mạng">
+
+    <link rel="stylesheet"
+          href="style.css">
+
 </head>
 
 <body>
 
-    <div class="grid-bg"></div>
+<!-- ===================================================== -->
+<!-- BACKGROUND -->
+<!-- ===================================================== -->
 
-    <div class="container">
+<div class="bg-grid"></div>
 
-        <section id="home" class="screen">
+<div class="bg-scan"></div>
 
-            <div class="home-box">
+<div class="bg-glow"></div>
 
-                <h1>
-                    🛡️ HÀNH TRÌNH<br>
-                    TRUY VẾT TỘI PHẠM MẠNG
-                </h1>
+<!-- ===================================================== -->
+<!-- APP -->
+<!-- ===================================================== -->
 
-                <p class="subtitle">
-                    Bạn là chuyên gia An ninh mạng.
-                </p>
+<div id="app">
 
-                <div class="case-box">
+<!-- ===================================================== -->
+<!-- HOME -->
+<!-- ===================================================== -->
 
-                    <h2>📁 Hồ sơ vụ án</h2>
+<section id="homeScreen"
+         class="screen active">
 
-                    <p><strong>Nạn nhân:</strong> Nguyễn Văn A (aka Khoai Lang Beng)</p>
+<div class="home-card">
 
-                    <p><strong>Sự việc:</strong> Bị lừa chuyển tiền qua Dép Lào.</p>
+<div class="logo">
 
-                    <p><strong>Mục tiêu:</strong> Phân tích dấu vết số để truy tìm đối tượng.</p>
+🛡️
 
-                    <p><strong>Lưu ý:</strong> Đây là hệ thống mô phỏng.</p>
+</div>
 
-                </div>
+<h1>
 
-                <button id="startBtn">
-                    🚀 BẮT ĐẦU ĐIỀU TRA
-                </button>
+CYBER TRACE
 
-            </div>
+</h1>
 
-        </section>
+<h2>
 
-        <section id="game" class="screen hidden">
+Simulator Version 1.4
 
-            <div class="topbar">
+</h2>
 
-                <div class="top-item">
-                    📋 Task
-                    <span id="currentTask">1</span> /
-                    <span id="totalTask">10</span>
-                </div>
+<p>
 
-                <div class="top-item">
-                    ⭐ Điểm:
-                    <span id="score">0</span>
-                </div>
+Mô phỏng hành trình truy vết tội phạm mạng
 
-            </div>
+</p>
 
-            <div class="progress">
+<div class="home-info">
 
-                <div id="progressBar"></div>
+<div>
 
-            </div>
+<strong>Case</strong>
 
-            <div class="card">
+<span>
 
-                <h2 id="question"></h2>
+001
 
-                <div id="answers"></div>
+</span>
 
-                <p id="status"></p>
+</div>
 
-                <button id="nextBtn" class="hidden">
-                    Tiếp tục →
-                </button>
+<div>
 
-            </div>
+<strong>Nạn nhân</strong>
 
-        </section>
+<span>
 
-        <section id="result" class="screen hidden">
+Nguyễn Văn A
 
-            <h1>🎯 KẾT QUẢ TRUY VẾT</h1>
+</span>
 
-            <div class="result-card">
+</div>
 
-                <table>
+<div>
 
-                    <tr>
-                        <td>👤 Biệt danh</td>
-                        <td id="alias"></td>
-                    </tr>
+<strong>Thiệt hại</strong>
 
-                    <tr>
-                        <td>🌐 Địa chỉ IP</td>
-                        <td id="ip"></td>
-                    </tr>
+<span>
 
-                    <tr>
-                        <td>📍 Máy chủ</td>
-                        <td id="country"></td>
-                    </tr>
+50.000.000 VNĐ
 
-                    <tr>
-                        <td>⭐ Điểm</td>
-                        <td id="finalScore"></td>
-                    </tr>
+</span>
 
-                    <tr>
-                        <td>🏆 Đánh giá</td>
-                        <td id="rank"></td>
-                    </tr>
+</div>
 
-                </table>
+<div>
 
-                <hr>
+<strong>Mức độ</strong>
 
-                <h3>Khuyến nghị bảo mật</h3>
+<span class="danger">
 
-                <ul>
+HIGH
 
-                    <li>Không chuyển tiền nếu chưa xác minh người nhận.</li>
+</span>
 
-                    <li>Không chia sẻ mã OTP.</li>
+</div>
 
-                    <li>Bật xác thực hai lớp (2FA).</li>
+</div>
 
-                    <li>Kiểm tra tên miền trước khi đăng nhập.</li>
+<button id="startBtn">
 
-                    <li>Không tải tệp từ nguồn không tin cậy.</li>
+BẮT ĐẦU ĐIỀU TRA
 
-                    <li>Báo ngân hàng và cơ quan chức năng ngay khi phát hiện bị lừa.</li>
+</button>
 
-                </ul>
+</div>
 
-            </div>
+</section>
 
-            <button onclick="location.reload()">
-                🔄 Điều tra lại
-            </button>
+<!-- ===================================================== -->
+<!-- DASHBOARD -->
+<!-- ===================================================== -->
 
-        </section>
+<section id="dashboardScreen"
+         class="screen">
 
-    </div>
+<header>
 
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+<div>
+
+<h2>
+
+CASE #001
+
+</h2>
+
+<p>
+
+Cyber Investigation Dashboard
+
+</p>
+
+</div>
+
+<div>
+
+<span id="score">
+
+0
+
+</span>
+
+Điểm
+
+</div>
+
+</header>
+
+<!-- Progress -->
+
+<div class="progress">
+
+<div id="progressBar">
+
+</div>
+
+</div>
+
+<!-- MODULE GRID -->
+
+<div class="module-grid">
+
+<button class="module locked"
+        data-module="email">
+
+📧
+
+Email
+
+</button>
+
+<button class="module locked"
+        data-module="url">
+
+🌐
+
+URL
+
+</button>
+
+<button class="module locked"
+        data-module="whois">
+
+🌍
+
+WHOIS
+
+</button>
+
+<button class="module locked"
+        data-module="dns">
+
+🛰
+
+DNS
+
+</button>
+
+<button class="module locked"
+        data-module="ip">
+
+📍
+
+IP
+
+</button>
+
+<button class="module locked"
+        data-module="log">
+
+📄
+
+LOG
+
+</button>
+
+<button class="module locked"
+        data-module="metadata">
+
+🖼
+
+Metadata
+
+</button>
+
+<button class="module locked"
+        data-module="osint">
+
+🔎
+
+OSINT
+
+</button>
+
+<button class="module locked"
+        data-module="timeline">
+
+⏱
+
+Timeline
+
+</button>
+
+<button class="module locked"
+        data-module="report">
+
+📑
+
+Report
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ===================================================== -->
+<!-- MODULE -->
+<!-- ===================================================== -->
+
+<section id="moduleScreen"
+         class="screen">
+
+<div class="module-header">
+
+<button id="backBtn">
+
+← Dashboard
+
+</button>
+
+<h2 id="moduleTitle">
+
+Module
+
+</h2>
+
+</div>
+
+<div id="moduleContent">
+
+</div>
+
+</section>
+
+<!-- ===================================================== -->
+<!-- REPORT -->
+<!-- ===================================================== -->
+
+<section id="reportScreen"
+         class="screen">
+
+<div class="report-card">
+
+<h1>
+
+CASE CLOSED
+
+</h1>
+
+<div class="report-grid">
+
+<div>
+
+<strong>Alias</strong>
+
+<p id="alias">
+
+Unknown
+
+</p>
+
+</div>
+
+<div>
+
+<strong>IP</strong>
+
+<p id="criminalIP">
+
+0.0.0.0
+
+</p>
+
+</div>
+
+<div>
+
+<strong>Country</strong>
+
+<p id="country">
+
+Unknown
+
+</p>
+
+</div>
+
+<div>
+
+<strong>Technique</strong>
+
+<p id="technique">
+
+Unknown
+
+</p>
+
+</div>
+
+<div>
+
+<strong>Evidence</strong>
+
+<p id="evidenceCount">
+
+0
+
+</p>
+
+</div>
+
+<div>
+
+<strong>Điểm</strong>
+
+<p id="finalScore">
+
+0
+
+</p>
+
+</div>
+
+</div>
+
+<button id="restartBtn">
+
+ĐIỀU TRA LẠI
+
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+<script src="data.js"></script>
+
+<script src="script.js"></script>
 
 </body>
 
