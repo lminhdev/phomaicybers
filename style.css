@@ -1,0 +1,187 @@
+/* Khai báo biến màu sắc */
+:root {
+    --bg-color: #050505;
+    --text-main: #00ff41;
+    --text-secondary: #008f11;
+    --alert-color: #ff003c;
+    --border-color: #003b00;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+#app {
+    width: 100%;
+    max-width: 850px;
+    background: #0a0a0a;
+    border: 1px solid var(--text-secondary);
+    border-radius: 5px;
+    padding: 25px;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hiệu ứng sọc màn hình CRT (Scanline) */
+#app::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px dashed var(--text-secondary);
+    padding-bottom: 10px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Để nội dung đè lên hiệu ứng scanline */
+.screen {
+    position: relative;
+    z-index: 3;
+}
+
+/* Intro Screen */
+.intro-text {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+/* Nút bấm (Buttons) */
+.btn {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--text-main);
+    padding: 15px;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.btn:hover:not(:disabled) {
+    background-color: var(--text-main);
+    color: var(--bg-color);
+    box-shadow: 0 0 10px var(--text-main);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-center {
+    text-align: center;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+/* Game Screen */
+.level-indicator {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.scenario {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.log-box {
+    background-color: #000;
+    border-left: 3px solid var(--text-secondary);
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    color: #ccc;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#feedback-msg {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+    min-height: 50px;
+}
+
+.success { color: var(--text-main); text-shadow: 0 0 5px var(--text-main); }
+.error { color: var(--alert-color); text-shadow: 0 0 5px var(--alert-color); }
+
+/* Result Screen */
+.stats-box {
+    background: rgba(0, 255, 65, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.tips-list {
+    list-style-type: square;
+    margin-left: 20px;
+    margin-bottom: 25px;
+}
+
+.tips-list li {
+    margin-bottom: 12px;
+}
+
+/* Hiệu ứng con trỏ nhấp nháy */
+.cursor {
+    animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* Tương thích điện thoại */
+@media (max-width: 600px) {
+    #app { padding: 15px; border: none; box-shadow: none; }
+    h1 { font-size: 20px; }
+    .btn { font-size: 14px; padding: 12px; }
+    .log-box { font-size: 12px; }
+}
