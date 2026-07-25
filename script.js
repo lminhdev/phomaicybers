@@ -1,13 +1,3 @@
-// =========================================
-// HÀNH TRÌNH TRUY VẾT TỘI PHẠM MẠNG
-// script.js
-// Phiên bản 2.0
-// =========================================
-
-// ================================
-// DOM
-// ================================
-
 const home = document.getElementById("home");
 const game = document.getElementById("game");
 const result = document.getElementById("result");
@@ -27,36 +17,26 @@ const scoreText = document.getElementById("score");
 
 const progressBar = document.getElementById("progressBar");
 
-// RESULT
-
 const alias = document.getElementById("alias");
 const ip = document.getElementById("ip");
 const country = document.getElementById("country");
 const finalScore = document.getElementById("finalScore");
 const rank = document.getElementById("rank");
 
-// ================================
-// BIẾN HỆ THỐNG
-// ================================
-
 let currentIndex = 0;
 let score = 0;
 let answered = false;
 
-// ================================
-// DỮ LIỆU MÔ PHỎNG
-// ================================
-
 const aliases = [
 
-    "ShadowFox",
-    "GhostByte",
-    "NightSpider",
-    "DarkRoot",
-    "ZeroTrace",
-    "CyberWolf",
-    "SilentMask",
-    "BlackFalcon"
+    "phomaiconmelcuoi",
+    "phomaiconmelcuoi",
+    "phomaiconmelcuoi",
+    "phomaiconmelcuoi",
+    "phomaiconmelcuoi",
+    "phomaiconmelcuoi",
+    "phomaiconmelcuoi",
+    "saygex69"
 
 ];
 
@@ -84,19 +64,11 @@ const countries = [
 
 ];
 
-// ================================
-// HÀM LẤY NGẪU NHIÊN
-// ================================
-
 function randomItem(array){
 
     return array[Math.floor(Math.random()*array.length)];
 
 }
-
-// ================================
-// CẬP NHẬT THANH TIẾN TRÌNH
-// ================================
 
 function updateProgress(){
 
@@ -106,10 +78,6 @@ function updateProgress(){
     progressBar.style.width = percent + "%";
 
 }
-
-// ================================
-// KHỞI TẠO
-// ================================
 
 function initialize(){
 
@@ -123,10 +91,6 @@ function initialize(){
 
 }
 
-// ================================
-// BẮT ĐẦU TRÒ CHƠI
-// ================================
-
 startBtn.addEventListener("click",()=>{
 
     home.classList.add("hidden");
@@ -138,9 +102,6 @@ startBtn.addEventListener("click",()=>{
     loadTask();
 
 });
-// ================================
-// HIỂN THỊ TASK
-// ================================
 
 function loadTask(){
 
@@ -183,10 +144,6 @@ function loadTask(){
 
 }
 
-// ================================
-// VÔ HIỆU HÓA ĐÁP ÁN
-// ================================
-
 function disableAnswers(){
 
     document
@@ -198,10 +155,6 @@ function disableAnswers(){
         });
 
 }
-
-// ================================
-// ĐÁNH DẤU ĐÁP ÁN ĐÚNG
-// ================================
 
 function highlightCorrectAnswer(){
 
@@ -220,10 +173,6 @@ function highlightCorrectAnswer(){
 
 }
 
-// ================================
-// ĐÁNH DẤU ĐÁP ÁN NGƯỜI CHƠI
-// ================================
-
 function highlightSelectedAnswer(index){
 
     const buttons =
@@ -240,10 +189,6 @@ function highlightSelectedAnswer(index){
     }
 
 }
-
-// ================================
-// KIỂM TRA ĐÁP ÁN
-// ================================
 
 function checkAnswer(selectedIndex){
 
@@ -269,15 +214,11 @@ function checkAnswer(selectedIndex){
     },1000);
 
 }
-// ================================
-// HIỂN THỊ KẾT QUẢ TASK
-// ================================
 
 function showAnswerResult(selectedIndex){
 
     const task = tasks[currentIndex];
 
-    // Trả lời đúng
     if(selectedIndex === task.answer){
 
         score++;
@@ -294,7 +235,6 @@ function showAnswerResult(selectedIndex){
 
     }
 
-    // Trả lời sai
     else{
 
         statusText.className = "fail";
@@ -311,15 +251,10 @@ function showAnswerResult(selectedIndex){
 
 }
 
-// ================================
-// NÚT TIẾP TỤC
-// ================================
-
 nextBtn.addEventListener("click",()=>{
 
     currentIndex++;
 
-    // Hết nhiệm vụ
     if(currentIndex >= tasks.length){
 
         showResult();
@@ -331,9 +266,6 @@ nextBtn.addEventListener("click",()=>{
     loadTask();
 
 });
-// ================================
-// HIỂN THỊ KẾT QUẢ CUỐI
-// ================================
 
 function showResult(){
 
@@ -341,11 +273,7 @@ function showResult(){
 
     result.classList.remove("hidden");
 
-    // Hoàn thành thanh tiến trình
-
     progressBar.style.width = "100%";
-
-    // Dữ liệu mô phỏng
 
     alias.textContent = randomItem(aliases);
 
@@ -353,12 +281,8 @@ function showResult(){
 
     country.textContent = randomItem(countries);
 
-    // Điểm
-
     finalScore.textContent =
         score + " / " + tasks.length;
-
-    // Xếp hạng
 
     let text = "";
 
@@ -401,10 +325,6 @@ function showResult(){
 
 }
 
-// ================================
-// RESET GAME
-// ================================
-
 function resetGame(){
 
     currentIndex = 0;
@@ -418,10 +338,6 @@ function resetGame(){
     progressBar.style.width = "0%";
 
 }
-
-// ================================
-// KHỞI ĐỘNG
-// ================================
 
 initialize();
 
